@@ -150,7 +150,7 @@ Include basic configurations for prettier in the `.prettierrc` file.
 }
 ```
 
-Also, we need to tell prettier which files to not format So inside .prettierignore include the following.
+Also, we need to tell prettier which files to not format So inside `.prettierignore` include the following.
 
 ```js
 dist;
@@ -188,7 +188,7 @@ npm i ts-node-dev --save-dev
 npx ts-node-dev --transpile-only src/server.ts
 ```
 
-## Project Scripts Overview
+## Project Scripts
 
 ```
 "scripts": {
