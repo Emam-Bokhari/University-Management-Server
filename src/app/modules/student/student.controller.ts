@@ -29,13 +29,25 @@ const getAllStudents = async (req: Request, res: Response) => {
 };
 
 const getSingleStudent = async (req: Request, res: Response) => {
-  const studentId = req.params.studentId;
-  const result = await StudentServices.getSingleStudentFromDB(studentId);
-  res.status(200).json({
-    success: true,
-    message: 'Student is retrieved successfully',
-    data: result,
-  });
+  try {
+    const studentId = req.params.studentId;
+    const result = await StudentServices.getSingleStudentFromDB(studentId);
+
+    if (!result) {
+      res.status(404).json({
+        success: false,
+        message: "Student not found with the given ID",
+      })
+    }
+
+    res.status(200).json({
+      success: true,
+      message: 'Student is retrieved successfully',
+      data: result,
+    });
+  } catch (err) {
+    console.log(err)
+  }
 };
 
 export const StudentControllers = {

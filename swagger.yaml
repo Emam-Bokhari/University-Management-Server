@@ -1,0 +1,453 @@
+openapi: 3.0.0
+info: 
+  title: University Management
+  description:  An advanced University Management System API built to simplify and enhance the management of students, faculty, courses, and administrative workflows. This API empowers universities with efficient solutions for student enrollment, course management, attendance tracking, and streamlined administrative operations
+  version: 3.0.0
+servers:
+  - url: http://localhost:3000/api/v1/
+    description: Localhost
+  - url: https:dreamsbokhari.com
+    description: Prod Server
+tags:
+  - name: Students
+    description: Operations related to student management
+paths: 
+  "/students":
+    post:
+      tags:
+        - Students
+      summary: Create a new student
+      description: Adds a new student to the database.
+      requestBody:
+        required: true
+        content:
+            "application/json":
+              schema:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: s1123
+                        name:
+                          type: object
+                          properties:
+                            firstName:
+                              type: string
+                              example: Moshfiqur
+                            middleName:
+                                type: string
+                                example: Rahman
+                            lastName:
+                              type: string
+                              example: Emam Bokhari
+                        profileImage:
+                          type: string
+                          example: https://placehold.co/300
+                        gender: 
+                          type: string
+                          example: Male
+                        dateOfBirth:
+                          type: string
+                          example: 23-Apr-2000
+                        email:
+                          type: string
+                          example: moshfiqurrahman37@gmail.com
+                        contactNo:
+                          type: string
+                          example: 01315773424
+                        emergencyContactNo: 
+                          type: string
+                          example: 01710347574
+                        bloodGroup:
+                          type: string
+                          example: O+
+                        presentAddress:
+                          type: string
+                          example: Gulshan-02,Dhaka,Bangladesh
+                        permanentAddress:
+                          type: string
+                          example: Brahmanbaria,Quasba(Mojlishpur), Bangladesh
+                        gurdian:
+                          type: object
+                          properties:
+                            fatherName:
+                              type: string
+                              example: Mokhlesur Rahman
+                            fatherOccupation:
+                              type: string
+                              example: Businessman
+                            fatherContactNo:
+                              type: string
+                              example: 01700000000
+                            motherName:
+                              type: string
+                              example: Taslima Akter
+                            motherOccupation:
+                              type: string
+                              example: Housewife
+                            motherContactNo:
+                              type: string
+                              example: 01700000000
+                        localGurdian:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: Saddam Hossain
+                            occupation:
+                              type: string
+                              example: Businessman
+                            contactNo:
+                              type: string
+                              example: 01700000000
+                            address:
+                              type: string
+                              example: Feni, Bangladesh
+                        active:
+                          type: string
+                          example: active
+      responses:
+        "201":
+          description: Success
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: Students created successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: s1123
+                        name:
+                          type: object
+                          properties:
+                            firstName:
+                              type: string
+                              example: Moshfiqur
+                            middleName:
+                                type: string
+                                example: Rahman
+                            lastName:
+                              type: string
+                              example: Emam Bokhari
+                        profileImage:
+                          type: string
+                          example: https://placehold.co/300
+                        gender: 
+                          type: string
+                          example: Male
+                        dateOfBirth:
+                          type: string
+                          example: 23-Apr-2000
+                        email:
+                          type: string
+                          example: moshfiqurrahman37@gmail.com
+                        contactNo:
+                          type: string
+                          example: 01315773424
+                        emergencyContactNo: 
+                          type: string
+                          example: 01710347574
+                        bloodGroup:
+                          type: string
+                          example: O+
+                        presentAddress:
+                          type: string
+                          example: Gulshan-02,Dhaka,Bangladesh
+                        permanentAddress:
+                          type: string
+                          example: Brahmanbaria,Quasba(Mojlishpur), Bangladesh
+                        gurdian:
+                          type: object
+                          properties:
+                            fatherName:
+                              type: string
+                              example: Mokhlesur Rahman
+                            fatherOccupation:
+                              type: string
+                              example: Businessman
+                            fatherContactNo:
+                              type: string
+                              example: 01700000000
+                            motherName:
+                              type: string
+                              example: Taslima Akter
+                            motherOccupation:
+                              type: string
+                              example: Housewife
+                            motherContactNo:
+                              type: string
+                              example: 01700000000
+                        localGurdian:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: Saddam Hossain
+                            occupation:
+                              type: string
+                              example: Businessman
+                            contactNo:
+                              type: string
+                              example: 01700000000
+                            address:
+                              type: string
+                              example: Feni, Bangladesh
+                        active:
+                          type: string
+                          example: active
+        "500":
+          description: Internal server error
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message: 
+                    type: string
+                    example: Internal server error
+    get:
+      tags:
+        - Students
+      summary: Retrieve all students
+      description: Fetch all student records from the database.
+      responses:
+        "200":
+          description: List of all students.
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: Students are retreived successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: s1123
+                        name:
+                          type: object
+                          properties:
+                            firstName:
+                              type: string
+                              example: Moshfiqur
+                            middleName:
+                                type: string
+                                example: Rahman
+                            lastName:
+                              type: string
+                              example: Emam Bokhari
+                        profileImage:
+                          type: string
+                          example: https://placehold.co/300
+                        gender: 
+                          type: string
+                          example: Male
+                        dateOfBirth:
+                          type: string
+                          example: 23-Apr-2000
+                        email:
+                          type: string
+                          example: moshfiqurrahman37@gmail.com
+                        contactNo:
+                          type: string
+                          example: 01315773424
+                        emergencyContactNo: 
+                          type: string
+                          example: 01710347574
+                        bloodGroup:
+                          type: string
+                          example: O+
+                        presentAddress:
+                          type: string
+                          example: Gulshan-02,Dhaka,Bangladesh
+                        permanentAddress:
+                          type: string
+                          example: Brahmanbaria,Quasba(Mojlishpur), Bangladesh
+                        gurdian:
+                          type: object
+                          properties:
+                            fatherName:
+                              type: string
+                              example: Mokhlesur Rahman
+                            fatherOccupation:
+                              type: string
+                              example: Businessman
+                            fatherContactNo:
+                              type: string
+                              example: 01700000000
+                            motherName:
+                              type: string
+                              example: Taslima Akter
+                            motherOccupation:
+                              type: string
+                              example: Housewife
+                            motherContactNo:
+                              type: string
+                              example: 01700000000
+                        localGurdian:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: Saddam Hossain
+                            occupation:
+                              type: string
+                              example: Businessman
+                            contactNo:
+                              type: string
+                              example: 01700000000
+                            address:
+                              type: string
+                              example: Feni, Bangladesh
+                        active:
+                          type: string
+                          example: active
+        "500":
+          description: Internal server error
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message: 
+                    type: string
+                    example: Internal server error
+  "/students/{studentId}":
+    get:
+      tags:
+        - Students
+      summary: Retrieved a single student by ID
+      description: Retrieves the student record from the database based on the provided student ID.
+      parameters:
+        - in: path
+          name: studentId
+          required: true
+          schema:
+            type: string
+            example: s11935
+          description: The ID of the student to retrieve.
+      responses:
+        "200":
+          description: Successfully retrieved the student data.
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message: 
+                    type: string
+                    example: Students are retreived successfully
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: s1123
+                        name:
+                          type: object
+                          properties:
+                            firstName:
+                              type: string
+                              example: Moshfiqur
+                            middleName:
+                                type: string
+                                example: Rahman
+                            lastName:
+                              type: string
+                              example: Emam Bokhari
+                        profileImage:
+                          type: string
+                          example: https://placehold.co/300
+                        gender: 
+                          type: string
+                          example: Male
+                        dateOfBirth:
+                          type: string
+                          example: 23-Apr-2000
+                        email:
+                          type: string
+                          example: moshfiqurrahman37@gmail.com
+                        contactNo:
+                          type: string
+                          example: 01315773424
+                        emergencyContactNo: 
+                          type: string
+                          example: 01710347574
+                        bloodGroup:
+                          type: string
+                          example: O+
+                        presentAddress:
+                          type: string
+                          example: Gulshan-02,Dhaka,Bangladesh
+                        permanentAddress:
+                          type: string
+                          example: Brahmanbaria,Quasba(Mojlishpur), Bangladesh
+                        gurdian:
+                          type: object
+                          properties:
+                            fatherName:
+                              type: string
+                              example: Mokhlesur Rahman
+                            fatherOccupation:
+                              type: string
+                              example: Businessman
+                            fatherContactNo:
+                              type: string
+                              example: 01700000000
+                            motherName:
+                              type: string
+                              example: Taslima Akter
+                            motherOccupation:
+                              type: string
+                              example: Housewife
+                            motherContactNo:
+                              type: string
+                              example: 01700000000
+                        localGurdian:
+                          type: object
+                          properties:
+                            name:
+                              type: string
+                              example: Saddam Hossain
+                            occupation:
+                              type: string
+                              example: Businessman
+                            contactNo:
+                              type: string
+                              example: 01700000000
+                            address:
+                              type: string
+                              example: Feni, Bangladesh
+                        active:
+                          type: string
+                          example: active
