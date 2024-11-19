@@ -7,16 +7,12 @@ const userNameValidationSchema = Joi.object({
     .required()
     .min(5)
     .max(50)
-    .regex(
-      /^[A-Za-z]*$/,
-      'First name must start with a capital letter and rest lowercase',
-    )
+    .pattern(/^[A-Z][a-z]*(\s[A-Z][a-z]*)?$/, 'capitalized words')
     .messages({
       'string.empty': 'First name is required.',
-      'string.min': 'The length must be at least 5 charecters.',
-      'string.max': 'First name can not exceed 50 characters.',
-      'string.pattern.base':
-        'First name must start with a capital letter, and all other letters must be lowercase',
+      'string.min': 'The length must be at least 5 characters.',
+      'string.max': 'First name cannot exceed 50 characters.',
+      'string.pattern.base': '{#value} must be one or two words, with each word capitalized.',
     }),
   middleName: Joi.string().trim().max(50).allow(null),
   lastName: Joi.string()
@@ -24,22 +20,24 @@ const userNameValidationSchema = Joi.object({
     .required()
     .min(5)
     .max(50)
-    .pattern(/^[A-Za-z]+$/, 'alpha')
+    .pattern(/^[A-Z][a-z]*(\s[A-Z][a-z]*)?$/, 'capitalized words')
     .messages({
-      'string.empty': 'Last name is required',
-      'string.min': 'The length must be at least 5 charecters.',
-      'string.max': 'Last name can not exceed 50 characters',
-      'string.pattern.base': '{#value} is not valid.',
-    }),
+      'string.empty': 'Last name is required.',
+      'string.min': 'The length must be at least 5 characters.',
+      'string.max': 'Last name cannot exceed 50 characters.',
+      'string.pattern.base': '{#value} must be one or two words, with each word capitalized.',
+    })
 });
 
 // Joi schema for gurdian
 const gurdianValidationSchema = Joi.object({
-  fatherName: Joi.string().trim().required().min(5).max(50).messages({
-    'string.empty': "Father's name is required",
-    'string.min': 'The length must be at least 5 charecters',
-    'string.max': "Father's name can not exceed 50 characters",
-  }),
+  fatherName: Joi.string().trim().required().min(5).max(50).pattern(/^[A-Z][a-z]*(\s[A-Z][a-z]*)?$/, 'capitalized words')
+    .messages({
+      'string.empty': "Father's name is required.",
+      'string.min': 'The length must be at least 5 characters.',
+      'string.max': "Father's name cannot exceed 50 characters.",
+      'string.pattern.base': '{#value} must be one or two words, with each word capitalized.',
+    }),
   fatherOccupation: Joi.string().trim().required().messages({
     'string.empty': "Father's occupation is required",
   }),
@@ -52,11 +50,13 @@ const gurdianValidationSchema = Joi.object({
       'string.pattern.base':
         'Contact number must be a valid number (e.g., +88017XXXXXXXX or 017XXXXXXXX).',
     }),
-  motherName: Joi.string().trim().required().min(5).max(50).messages({
-    'string.empty': "Mother's name is required",
-    'string.min': 'The length must be 5 charecters',
-    'string.max': "Mother's name can not be exceed 50 characters.",
-  }),
+  motherName: Joi.string().trim().required().min(5).max(50).pattern(/^[A-Z][a-z]*(\s[A-Z][a-z]*)?$/, 'capitalized words')
+    .messages({
+      'string.empty': "Mother's name is required.",
+      'string.min': 'The length must be at least 5 characters.',
+      'string.max': "Mother's name cannot exceed 50 characters.",
+      'string.pattern.base': '{#value} must be one or two words, with each word capitalized.',
+    }),
   motherOccupation: Joi.string().trim().required().messages({
     'string.empty': "Mother's occupation is required",
   }),
@@ -73,11 +73,13 @@ const gurdianValidationSchema = Joi.object({
 
 // joi schema for local gurdian
 const localGurdianValidationSchema = Joi.object({
-  name: Joi.string().trim().required().min(5).max(50).messages({
-    'string.empty': "Father's name is required",
-    'string.min': 'The length must be at least 5 charecters',
-    'string.max': "Father's name can not exceed 50 characters",
-  }),
+  name: Joi.string().trim().required().min(5).max(50).pattern(/^[A-Z][a-z]*(\s[A-Z][a-z]*)?$/, 'capitalized words')
+    .messages({
+      'string.empty': "Name is required.",
+      'string.min': 'The length must be at least 5 characters.',
+      'string.max': "Name cannot exceed 50 characters.",
+      'string.pattern.base': '{#value} must be one or two words, with each word capitalized.',
+    }),
   occupation: Joi.string().trim().required().messages({
     'string.empty': 'Occupation is required',
   }),
