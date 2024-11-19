@@ -1,10 +1,27 @@
 import { Request, Response } from 'express';
 import { StudentServices } from './student.service';
+import studentValidationSchema from './student.validator';
 
 const createStudent = async (req: Request, res: Response) => {
   try {
     const { student: studentData } = req.body;
-    const result = await StudentServices.createStudentIntoDB(studentData);
+
+    // validate incoming request data
+    const { error, value } = studentValidationSchema.validate(studentData);
+
+    // handle validation error
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: 'Validation failed',
+        error: error.details,
+      });
+    }
+
+    // if validation passes, create a student in database
+    const result = await StudentServices.createStudentIntoDB(value);
+
+    // successfull response
     res.status(201).json({
       success: true,
       message: 'Student is created successfully',
@@ -12,6 +29,13 @@ const createStudent = async (req: Request, res: Response) => {
     });
   } catch (err) {
     console.log(err);
+
+    // general error message
+    res.status(500).json({
+      success: false,
+      message: 'Internal server error',
+      error: err,
+    });
   }
 };
 
@@ -36,8 +60,8 @@ const getSingleStudent = async (req: Request, res: Response) => {
     if (!result) {
       res.status(404).json({
         success: false,
-        message: "Student not found with the given ID",
-      })
+        message: 'Student not found with the given ID',
+      });
     }
 
     res.status(200).json({
@@ -46,7 +70,7 @@ const getSingleStudent = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 };
 

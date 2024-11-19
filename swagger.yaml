@@ -1,7 +1,7 @@
 openapi: 3.0.0
-info: 
+info:
   title: University Management
-  description:  An advanced University Management System API built to simplify and enhance the management of students, faculty, courses, and administrative workflows. This API empowers universities with efficient solutions for student enrollment, course management, attendance tracking, and streamlined administrative operations
+  description: An advanced University Management System API built to simplify and enhance the management of students, faculty, courses, and administrative workflows. This API empowers universities with efficient solutions for student enrollment, course management, attendance tracking, and streamlined administrative operations
   version: 3.0.0
 servers:
   - url: http://localhost:3000/api/v1/
@@ -11,8 +11,8 @@ servers:
 tags:
   - name: Students
     description: Operations related to student management
-paths: 
-  "/students":
+paths:
+  '/students':
     post:
       tags:
         - Students
@@ -21,103 +21,103 @@ paths:
       requestBody:
         required: true
         content:
-            "application/json":
-              schema:
-                      type: object
-                      properties:
-                        id:
-                          type: string
-                          example: s1123
-                        name:
-                          type: object
-                          properties:
-                            firstName:
-                              type: string
-                              example: Moshfiqur
-                            middleName:
-                                type: string
-                                example: Rahman
-                            lastName:
-                              type: string
-                              example: Emam Bokhari
-                        profileImage:
-                          type: string
-                          example: https://placehold.co/300
-                        gender: 
-                          type: string
-                          example: Male
-                        dateOfBirth:
-                          type: string
-                          example: 23-Apr-2000
-                        email:
-                          type: string
-                          example: moshfiqurrahman37@gmail.com
-                        contactNo:
-                          type: string
-                          example: 01315773424
-                        emergencyContactNo: 
-                          type: string
-                          example: 01710347574
-                        bloodGroup:
-                          type: string
-                          example: O+
-                        presentAddress:
-                          type: string
-                          example: Gulshan-02,Dhaka,Bangladesh
-                        permanentAddress:
-                          type: string
-                          example: Brahmanbaria,Quasba(Mojlishpur), Bangladesh
-                        gurdian:
-                          type: object
-                          properties:
-                            fatherName:
-                              type: string
-                              example: Mokhlesur Rahman
-                            fatherOccupation:
-                              type: string
-                              example: Businessman
-                            fatherContactNo:
-                              type: string
-                              example: 01700000000
-                            motherName:
-                              type: string
-                              example: Taslima Akter
-                            motherOccupation:
-                              type: string
-                              example: Housewife
-                            motherContactNo:
-                              type: string
-                              example: 01700000000
-                        localGurdian:
-                          type: object
-                          properties:
-                            name:
-                              type: string
-                              example: Saddam Hossain
-                            occupation:
-                              type: string
-                              example: Businessman
-                            contactNo:
-                              type: string
-                              example: 01700000000
-                            address:
-                              type: string
-                              example: Feni, Bangladesh
-                        active:
-                          type: string
-                          example: active
+          'application/json':
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: s1123
+                name:
+                  type: object
+                  properties:
+                    firstName:
+                      type: string
+                      example: Moshfiqur
+                    middleName:
+                      type: string
+                      example: Rahman
+                    lastName:
+                      type: string
+                      example: Emam Bokhari
+                profileImage:
+                  type: string
+                  example: https://placehold.co/300
+                gender:
+                  type: string
+                  example: Male
+                dateOfBirth:
+                  type: string
+                  example: 23-Apr-2000
+                email:
+                  type: string
+                  example: moshfiqurrahman37@gmail.com
+                contactNo:
+                  type: string
+                  example: 01315773424
+                emergencyContactNo:
+                  type: string
+                  example: 01710347574
+                bloodGroup:
+                  type: string
+                  example: O+
+                presentAddress:
+                  type: string
+                  example: Gulshan-02,Dhaka,Bangladesh
+                permanentAddress:
+                  type: string
+                  example: Brahmanbaria,Quasba(Mojlishpur), Bangladesh
+                gurdian:
+                  type: object
+                  properties:
+                    fatherName:
+                      type: string
+                      example: Mokhlesur Rahman
+                    fatherOccupation:
+                      type: string
+                      example: Businessman
+                    fatherContactNo:
+                      type: string
+                      example: 01700000000
+                    motherName:
+                      type: string
+                      example: Taslima Akter
+                    motherOccupation:
+                      type: string
+                      example: Housewife
+                    motherContactNo:
+                      type: string
+                      example: 01700000000
+                localGurdian:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Saddam Hossain
+                    occupation:
+                      type: string
+                      example: Businessman
+                    contactNo:
+                      type: string
+                      example: 01700000000
+                    address:
+                      type: string
+                      example: Feni, Bangladesh
+                active:
+                  type: string
+                  example: active
       responses:
-        "201":
+        '201':
           description: Success
           content:
-            "application/json":
+            'application/json':
               schema:
                 type: object
                 properties:
                   success:
                     type: boolean
                     example: true
-                  message: 
+                  message:
                     type: string
                     example: Students created successfully
                   data:
@@ -135,15 +135,15 @@ paths:
                               type: string
                               example: Moshfiqur
                             middleName:
-                                type: string
-                                example: Rahman
+                              type: string
+                              example: Rahman
                             lastName:
                               type: string
                               example: Emam Bokhari
                         profileImage:
                           type: string
                           example: https://placehold.co/300
-                        gender: 
+                        gender:
                           type: string
                           example: Male
                         dateOfBirth:
@@ -155,7 +155,7 @@ paths:
                         contactNo:
                           type: string
                           example: 01315773424
-                        emergencyContactNo: 
+                        emergencyContactNo:
                           type: string
                           example: 01710347574
                         bloodGroup:
@@ -206,17 +206,17 @@ paths:
                         active:
                           type: string
                           example: active
-        "500":
+        '500':
           description: Internal server error
           content:
-            "application/json":
+            'application/json':
               schema:
                 type: object
                 properties:
                   success:
                     type: boolean
                     example: false
-                  message: 
+                  message:
                     type: string
                     example: Internal server error
     get:
@@ -225,17 +225,17 @@ paths:
       summary: Retrieve all students
       description: Fetch all student records from the database.
       responses:
-        "200":
+        '200':
           description: List of all students.
           content:
-            "application/json":
+            'application/json':
               schema:
                 type: object
                 properties:
                   success:
                     type: boolean
                     example: true
-                  message: 
+                  message:
                     type: string
                     example: Students are retreived successfully
                   data:
@@ -253,15 +253,15 @@ paths:
                               type: string
                               example: Moshfiqur
                             middleName:
-                                type: string
-                                example: Rahman
+                              type: string
+                              example: Rahman
                             lastName:
                               type: string
                               example: Emam Bokhari
                         profileImage:
                           type: string
                           example: https://placehold.co/300
-                        gender: 
+                        gender:
                           type: string
                           example: Male
                         dateOfBirth:
@@ -273,7 +273,7 @@ paths:
                         contactNo:
                           type: string
                           example: 01315773424
-                        emergencyContactNo: 
+                        emergencyContactNo:
                           type: string
                           example: 01710347574
                         bloodGroup:
@@ -324,20 +324,20 @@ paths:
                         active:
                           type: string
                           example: active
-        "500":
+        '500':
           description: Internal server error
           content:
-            "application/json":
+            'application/json':
               schema:
                 type: object
                 properties:
                   success:
                     type: boolean
                     example: false
-                  message: 
+                  message:
                     type: string
                     example: Internal server error
-  "/students/{studentId}":
+  '/students/{studentId}':
     get:
       tags:
         - Students
@@ -352,17 +352,17 @@ paths:
             example: s11935
           description: The ID of the student to retrieve.
       responses:
-        "200":
+        '200':
           description: Successfully retrieved the student data.
           content:
-            "application/json":
+            'application/json':
               schema:
                 type: object
                 properties:
                   success:
                     type: boolean
                     example: true
-                  message: 
+                  message:
                     type: string
                     example: Students are retreived successfully
                   data:
@@ -380,15 +380,15 @@ paths:
                               type: string
                               example: Moshfiqur
                             middleName:
-                                type: string
-                                example: Rahman
+                              type: string
+                              example: Rahman
                             lastName:
                               type: string
                               example: Emam Bokhari
                         profileImage:
                           type: string
                           example: https://placehold.co/300
-                        gender: 
+                        gender:
                           type: string
                           example: Male
                         dateOfBirth:
@@ -400,7 +400,7 @@ paths:
                         contactNo:
                           type: string
                           example: 01315773424
-                        emergencyContactNo: 
+                        emergencyContactNo:
                           type: string
                           example: 01710347574
                         bloodGroup:
