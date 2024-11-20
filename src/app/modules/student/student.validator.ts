@@ -105,6 +105,10 @@ const studentValidationSchema = Joi.object({
   name: userNameValidationSchema.required().messages({
     'object.base': "Student's name is required",
   }),
+  password: Joi.string().trim().required().min(6).messages({
+    "string.empty": "Password is required",
+    "string.min": "Password must be 6 charecters"
+  }),
   profileImage: Joi.string().trim().uri().allow(null),
   gender: Joi.string().valid('male', 'female').required().messages({
     'any.only': "Gender must be either 'male' or 'female'",

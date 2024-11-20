@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { StudentMethods, StudentModel, TStudent, TUserName } from './student.interface';
-// import validator from 'validator';
+import bcrypt from "bcrypt";
+import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -87,6 +88,11 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethods>({
     trim: true,
     required: true,
   },
+  password: {
+    type: String,
+    trim: true,
+    required: true,
+  },
   profileImage: {
     type: String,
     trim: true,
@@ -149,6 +155,20 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethods>({
     default: 'active',
   },
 });
+
+// hash password and save into database
+studentSchema.pre("save", async function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const user = this;
+  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds))
+  next()
+
+})
+
+studentSchema.post("save", function (doc, next) {
+  doc.password = ""
+  next()
+})
 
 
 
