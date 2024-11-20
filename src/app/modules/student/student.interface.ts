@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model } from 'mongoose';
 
 export type TUserName = {
   firstName: string;
@@ -12,7 +12,7 @@ export type TGurdian = {
   fatherContactNo: string;
   motherName: string;
   motherOccupation: string;
-  matherContactNo: string;
+  motherContactNo: string;
 };
 
 export type TLocalGurdian = {
@@ -24,11 +24,11 @@ export type TLocalGurdian = {
 
 export type TStudent = {
   id: string;
-  name: TUserName;
   password: string;
+  name: TUserName;
   profileImage?: string;
   gender: 'male' | 'female';
-  dateOfBirth: string;
+  dateOfBirth?: string;
   email: string;
   contactNo: string;
   emergencyContactNo: string;
@@ -40,8 +40,7 @@ export type TStudent = {
   isActive: 'active' | 'blocked';
 };
 
-export type StudentMethods = {
-  isUserExists(id: string): Promise<TStudent | null>
+export interface StudentModel extends Model<TStudent> {
+  isUserExists(id: string): Promise<TStudent | null>;
 }
 
-export type StudentModel = Model<TStudent, Record<string, never>, StudentMethods>

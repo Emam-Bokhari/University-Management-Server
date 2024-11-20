@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
-import { StudentMethods, StudentModel, TStudent, TUserName } from './student.interface';
-import bcrypt from "bcrypt";
+import { StudentModel, TStudent, TUserName } from './student.interface';
+import bcrypt from 'bcrypt';
 import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>({
@@ -76,20 +76,20 @@ const localGurdianSchema = new Schema({
   },
 });
 
-const studentSchema = new Schema<TStudent, StudentModel, StudentMethods>({
+const studentSchema = new Schema<TStudent, StudentModel>({
   id: {
     type: String,
     trim: true,
     required: true,
     unique: true,
   },
-  name: {
-    type: userNameSchema,
+  password: {
+    type: String,
     trim: true,
     required: true,
   },
-  password: {
-    type: String,
+  name: {
+    type: userNameSchema,
     trim: true,
     required: true,
   },
@@ -101,7 +101,6 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethods>({
     type: String,
     enum: {
       values: ['male', 'female'],
-
       message: '{VALUE} is not valid',
     },
   },
@@ -156,26 +155,27 @@ const studentSchema = new Schema<TStudent, StudentModel, StudentMethods>({
   },
 });
 
-// hash password and save into database
-studentSchema.pre("save", async function (next) {
+
+// document middleware
+studentSchema.pre('save', async function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const user = this;
-  user.password = await bcrypt.hash(user.password, Number(config.bcrypt_salt_rounds))
-  next()
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  );
+  next();
+});
 
-})
+studentSchema.post('save', function (doc, next) {
+  doc.password = '';
+  next();
+});
 
-studentSchema.post("save", function (doc, next) {
-  doc.password = ""
-  next()
-})
-
-
-
-studentSchema.methods.isUserExists = async function (id: string) {
-  const existingUser = await Student.findOne({ id: id })
+studentSchema.statics.isUserExists = async function (id: string) {
+  const existingUser = await Student.findOne({ id: id });
   return existingUser;
-}
+};
 
 
 
