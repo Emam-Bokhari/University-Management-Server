@@ -1,10 +1,12 @@
-export type UserName = {
+import { Model } from "mongoose";
+
+export type TUserName = {
   firstName: string;
   middleName?: string;
   lastName: string;
 };
 
-export type Gurdian = {
+export type TGurdian = {
   fatherName: string;
   fatherOccupation: string;
   fatherContactNo: string;
@@ -13,16 +15,16 @@ export type Gurdian = {
   matherContactNo: string;
 };
 
-export type LocalGurdian = {
+export type TLocalGurdian = {
   name: string;
   occupation: string;
   contactNo: string;
   address: string;
 };
 
-export type Student = {
+export type TStudent = {
   id: string;
-  name: UserName;
+  name: TUserName;
   profileImage?: string;
   gender: 'male' | 'female';
   dateOfBirth: string;
@@ -32,7 +34,13 @@ export type Student = {
   bloodGroup?: 'A+' | 'A-' | 'AB+' | 'AB-' | 'B+' | 'B-' | 'O+' | 'O-';
   presentAddress: string;
   permanentAddress: string;
-  gurdian: Gurdian;
-  localGurdian: LocalGurdian;
+  gurdian: TGurdian;
+  localGurdian: TLocalGurdian;
   isActive: 'active' | 'blocked';
 };
+
+export type StudentMethods = {
+  isUserExists(id: string): Promise<TStudent | null>
+}
+
+export type StudentModel = Model<TStudent, Record<string, never>, StudentMethods>

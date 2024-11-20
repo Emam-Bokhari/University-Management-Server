@@ -27,13 +27,13 @@ const createStudent = async (req: Request, res: Response) => {
       message: 'Student is created successfully',
       data: result,
     });
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
 
     // general error message
     res.status(500).json({
       success: false,
-      message: 'Internal server error',
+      message: err.message || 'Internal server error',
       error: err,
     });
   }
