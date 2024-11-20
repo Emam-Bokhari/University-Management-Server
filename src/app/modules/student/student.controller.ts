@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { StudentServices } from './student.service';
 import studentValidationSchema from './student.validation';
 
-
 const createStudent = async (req: Request, res: Response) => {
   try {
     const { student: studentData } = req.body;
@@ -59,10 +58,29 @@ const getSingleStudent = async (req: Request, res: Response) => {
   }
 };
 
+const deleteStudent = async (req: Request, res: Response) => {
+  try {
+    const studentId = req.params.studentId;
+    const result = await StudentServices.deleteStudent(studentId)
+    res.status(200).json({
+      success: true,
+      message: "Student is deleted successfully",
+      data: result,
+    })
 
+  } catch (err: any) {
+    // console.log(err)
+    res.status(500).json({
+      success: false,
+      message: err.message || "Internal server error",
+      error: err,
+    })
+  }
+}
 
 export const StudentControllers = {
   createStudent,
   getAllStudents,
   getSingleStudent,
+  deleteStudent,
 };

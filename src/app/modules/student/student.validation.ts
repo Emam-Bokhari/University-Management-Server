@@ -78,6 +78,7 @@ const studentValidationSchema = z.object({
   gurdian: gurdianValidationSchema,
   localGurdian: localGurdianValidationSchema,
   isActive: z.enum(['active', 'blocked']).default('active'),
+  isDeleted: z.boolean().default(false)
 });
 
 export default studentValidationSchema;

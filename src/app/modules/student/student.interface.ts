@@ -38,9 +38,9 @@ export type TStudent = {
   gurdian: TGurdian;
   localGurdian: TLocalGurdian;
   isActive: 'active' | 'blocked';
+  isDeleted: boolean;
 };
 
 export interface StudentModel extends Model<TStudent> {
   isUserExists(id: string): Promise<TStudent | null>;
 }
-
