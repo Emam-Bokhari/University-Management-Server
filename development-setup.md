@@ -126,8 +126,8 @@ We can also add scripts for eslint in the **package.json** file.
 
 ```js
 "scripts": {
-"lint": "eslint src/**/\*.ts",
-"lint:fix": "eslint src/**/\*.ts --fix"
+"lint": "eslint src/**/*.ts",
+"lint:fix": "eslint src/**/*.ts --fix"
 },
 ```
 
