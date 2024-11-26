@@ -15,6 +15,8 @@
 - Project Manager
 - Business Analyst
 
+</br>
+
 - Product Requirements Document (PRD)
 - Business Requirements Document (BRD)
 - Software Requirements Specification (SRS)
@@ -24,6 +26,8 @@
 
 - System Architect
 - UI/UZ Designer
+
+</br>
 
 - System Design of Software
 - High Level Deisgn Document
@@ -36,6 +40,8 @@
 - Backend Developer
 - FullStack Developer
 
+</br>
+
 - Backend Development
 - Frontend Development
 - API Integration
@@ -47,6 +53,8 @@
 - QA Engineer
 - Tester
 
+</br>
+
 - Test Plan
 - Test Case
 - Test Scripts
@@ -57,6 +65,8 @@
 - Database Administrator
 - DevOPS
 
+</br>
+
 - Release Notes
 - Installation Guides
 - Configuration Guides
@@ -66,6 +76,8 @@
 - Support Engineer
 - Tester
 - Developer
+
+</br>
 
 - Change Request
 - Bug Reports
