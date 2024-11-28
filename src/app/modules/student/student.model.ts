@@ -83,6 +83,12 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     required: true,
     unique: true,
   },
+  user: {
+    type: Schema.ObjectId,
+    required: [true, "User id is required"],
+    unique: true,
+    ref: "User"
+  },
   password: {
     type: String,
     trim: true,
@@ -144,14 +150,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   localGurdian: {
     type: localGurdianSchema,
     required: true,
-  },
-  isActive: {
-    type: String,
-    enum: {
-      values: ['active', 'blocked'],
-      message: "Status must be either 'active' or 'blocked'",
-    },
-    default: 'active',
   },
   isDeleted: {
     type: Boolean,
