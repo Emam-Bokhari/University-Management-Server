@@ -83,9 +83,9 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   },
   user: {
     type: Schema.ObjectId,
-    required: [true, "User id is required"],
+    required: [true, 'User id is required'],
     unique: true,
-    ref: "User"
+    ref: 'User',
   },
   name: {
     type: userNameSchema,
@@ -98,7 +98,7 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   },
   gender: {
     type: String,
-    required: [true, "Gener is required"],
+    required: [true, 'Gener is required'],
     enum: {
       values: ['male', 'female'],
       message: '{VALUE} is not valid',
@@ -148,25 +148,24 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   isDeleted: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 
-
 // aggregate middleware
-studentSchema.pre("find", function (next) {
-  this.find({ isDeleted: { $ne: true } })
-  next()
-})
+studentSchema.pre('find', function (next) {
+  this.find({ isDeleted: { $ne: true } });
+  next();
+});
 
-studentSchema.pre("findOne", function (next) {
-  this.findOne({ isDeleted: { $ne: true } })
-  next()
-})
+studentSchema.pre('findOne', function (next) {
+  this.findOne({ isDeleted: { $ne: true } });
+  next();
+});
 
-studentSchema.pre("aggregate", function (next) {
-  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
-  next()
-})
+studentSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+  next();
+});
 
 studentSchema.statics.isUserExists = async function (id: string) {
   const existingUser = await Student.findOne({ id: id });

@@ -72,7 +72,7 @@ const studentValidationSchema = z.object({
   permanentAddress: z.string().trim().min(1, 'Permanent address is required.'),
   gurdian: gurdianValidationSchema,
   localGurdian: localGurdianValidationSchema,
-  isDeleted: z.boolean().default(false)
+  isDeleted: z.boolean().default(false),
 });
 
 export default studentValidationSchema;
