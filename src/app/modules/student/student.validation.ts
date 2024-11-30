@@ -47,32 +47,37 @@ const localGurdianValidationSchema = z.object({
   address: z.string().trim().min(1, "Guardian's address is required."),
 });
 
-const studentValidationSchema = z.object({
-  id: z.string().trim().min(1, "Student's ID is required."),
-  name: userNameValidationSchema,
-  profileImage: z.string().trim().optional(),
-  gender: z.enum(['male', 'female'], {
-    errorMap: () => ({ message: "Gender must be either 'male' or 'female'" }),
+export const studentValidationSchema = z.object({
+  body: z.object({
+    student: z.object({
+      name: userNameValidationSchema,
+      profileImage: z.string().trim().optional(),
+      gender: z.enum(['male', 'female'], {
+        errorMap: () => ({
+          message: "Gender must be either 'male' or 'female'",
+        }),
+      }),
+      dateOfBirth: z.string().optional(),
+      email: z
+        .string()
+        .trim()
+        .email('Invalid email address.')
+        .min(1, 'Email address is required.'),
+      contactNo: z.string().trim().min(1, 'Contact number is required.'),
+      emergencyContactNo: z
+        .string()
+        .trim()
+        .min(1, 'Emergency contact number is required.'),
+      bloodGroup: z
+        .enum(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'])
+        .optional(),
+      presentAddress: z.string().trim().min(1, 'Present address is required.'),
+      permanentAddress: z
+        .string()
+        .trim()
+        .min(1, 'Permanent address is required.'),
+      gurdian: gurdianValidationSchema,
+      localGurdian: localGurdianValidationSchema,
+    }),
   }),
-  dateOfBirth: z.string().optional(),
-  email: z
-    .string()
-    .trim()
-    .email('Invalid email address.')
-    .min(1, 'Email address is required.'),
-  contactNo: z.string().trim().min(1, 'Contact number is required.'),
-  emergencyContactNo: z
-    .string()
-    .trim()
-    .min(1, 'Emergency contact number is required.'),
-  bloodGroup: z
-    .enum(['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-'])
-    .optional(),
-  presentAddress: z.string().trim().min(1, 'Present address is required.'),
-  permanentAddress: z.string().trim().min(1, 'Permanent address is required.'),
-  gurdian: gurdianValidationSchema,
-  localGurdian: localGurdianValidationSchema,
-  isDeleted: z.boolean().default(false),
 });
-
-export default studentValidationSchema;
