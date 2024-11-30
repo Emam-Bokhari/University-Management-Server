@@ -25,7 +25,6 @@ export type TLocalGurdian = {
 export type TStudent = {
   id: string;
   user: Types.ObjectId;
-  password: string;
   name: TUserName;
   profileImage?: string;
   gender: 'male' | 'female';

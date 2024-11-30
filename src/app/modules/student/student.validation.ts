@@ -49,11 +49,6 @@ const localGurdianValidationSchema = z.object({
 
 const studentValidationSchema = z.object({
   id: z.string().trim().min(1, "Student's ID is required."),
-  password: z
-    .string()
-    .trim()
-    .min(1, 'Password is required')
-    .min(6, 'Password must be at least 6 characters'),
   name: userNameValidationSchema,
   profileImage: z.string().trim().optional(),
   gender: z.enum(['male', 'female'], {

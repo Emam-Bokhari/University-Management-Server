@@ -1,7 +1,5 @@
 import { Schema, model } from 'mongoose';
 import { StudentModel, TStudent, TUserName } from './student.interface';
-import bcrypt from 'bcrypt';
-import config from '../../config';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -89,11 +87,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     unique: true,
     ref: "User"
   },
-  password: {
-    type: String,
-    trim: true,
-    required: true,
-  },
   name: {
     type: userNameSchema,
     trim: true,
@@ -105,6 +98,7 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   },
   gender: {
     type: String,
+    required: [true, "Gener is required"],
     enum: {
       values: ['male', 'female'],
       message: '{VALUE} is not valid',
@@ -157,21 +151,6 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   }
 });
 
-// document middleware
-studentSchema.pre('save', async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(config.bcrypt_salt_rounds),
-  );
-  next();
-});
-
-studentSchema.post('save', function (doc, next) {
-  doc.password = '';
-  next();
-});
 
 // aggregate middleware
 studentSchema.pre("find", function (next) {
