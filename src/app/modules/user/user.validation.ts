@@ -5,7 +5,8 @@ const userValidationSchema = z.object({
     .string({
       invalid_type_error: 'Password must be string',
     })
-    .max(11, { message: 'Password can not be exceeds 11 characters' }),
+    .max(11, { message: 'Password can not be exceeds 11 characters' })
+    .optional(),
 });
 
 export default userValidationSchema;

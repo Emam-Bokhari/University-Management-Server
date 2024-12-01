@@ -34,8 +34,7 @@ const userSchema = new Schema(
 
 // document middleware
 userSchema.pre('save', async function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const user = this;
+  const user = this as typeof this & { password: string }; // Explicitly assert the type
   user.password = await bcrypt.hash(
     user.password,
     Number(config.bcrypt_salt_rounds),
