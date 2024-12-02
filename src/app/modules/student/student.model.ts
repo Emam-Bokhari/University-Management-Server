@@ -87,6 +87,11 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     unique: true,
     ref: 'User',
   },
+  admissionSemester: {
+    type: Schema.ObjectId,
+    required: [true, 'Admission semester id is required'],
+    ref: 'AcademicSemester',
+  },
   name: {
     type: userNameSchema,
     trim: true,
