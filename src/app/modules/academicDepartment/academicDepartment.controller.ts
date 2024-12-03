@@ -15,6 +15,18 @@ const createAcademicDepartment: RequestHandler = catchAsync(async (req, res) => 
     })
 })
 
+const getAllAcademicDepartment: RequestHandler = catchAsync(async (req, res) => {
+    const result = await AcademicDepartmentServices.getAllAcademicDepartmentFromDB();
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Academic department ara retrived successfully",
+        data: result,
+    })
+})
+
 export const AcademicDepartmentControllers = {
     createAcademicDepartment,
+    getAllAcademicDepartment,
 }
