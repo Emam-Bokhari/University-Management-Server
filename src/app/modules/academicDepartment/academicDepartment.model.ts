@@ -6,6 +6,10 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>({
         type: String,
         trim: true,
         required: true,
+    },
+    academicFaculty: {
+        type: Schema.Types.ObjectId,
+        required: true,
     }
 })
 
