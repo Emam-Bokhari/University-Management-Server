@@ -38,8 +38,22 @@ const getSingleAcademicDepartment: RequestHandler = catchAsync(async (req, res) 
     })
 })
 
+const updateAcademicDepartment: RequestHandler = catchAsync(async (req, res) => {
+    const academicDepartmentId = req.params.academicDepartmentId;
+    const updatedData = req.params;
+    const result = await AcademicDepartmentServices.updateAcademicDepartmentInDB(academicDepartmentId, updatedData);
+
+    sendResponse(res, {
+        statusCode: 200,
+        success: true,
+        message: "Academic department updated successfully",
+        data: result,
+    })
+})
+
 export const AcademicDepartmentControllers = {
     createAcademicDepartment,
     getAllAcademicDepartment,
     getSingleAcademicDepartment,
+    updateAcademicDepartment,
 }
