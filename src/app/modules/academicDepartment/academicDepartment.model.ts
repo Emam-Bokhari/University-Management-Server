@@ -1,20 +1,24 @@
-import { model, Schema } from "mongoose";
-import { TAcademicDepartment } from "./academicDepartment.interface";
+import { model, Schema } from 'mongoose';
+import { TAcademicDepartment } from './academicDepartment.interface';
 
-const academicDepartmentSchema = new Schema<TAcademicDepartment>({
+const academicDepartmentSchema = new Schema<TAcademicDepartment>(
+  {
     name: {
-        type: String,
-        trim: true,
-        required: true,
-        unique: true,
+      type: String,
+      trim: true,
+      required: true,
+      unique: true,
     },
     academicFaculty: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: "AcademicFaculty"
-    }
-},
-    { timestamps: true }
-)
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: 'AcademicFaculty',
+    },
+  },
+  { timestamps: true },
+);
 
-export const AcademicDepartment = model<TAcademicDepartment>("AcademicDepartment", academicDepartmentSchema);
+export const AcademicDepartment = model<TAcademicDepartment>(
+  'AcademicDepartment',
+  academicDepartmentSchema,
+);

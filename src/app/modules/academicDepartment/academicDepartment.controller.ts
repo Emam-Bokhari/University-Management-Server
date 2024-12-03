@@ -1,59 +1,78 @@
-import { RequestHandler } from "express";
-import { catchAsync } from "../../utils/catchAsync";
-import { AcademicDepartmentServices } from "./academicDepartment.service";
-import sendResponse from "../../utils/sendResponse";
+import { RequestHandler } from 'express';
+import { catchAsync } from '../../utils/catchAsync';
+import { AcademicDepartmentServices } from './academicDepartment.service';
+import sendResponse from '../../utils/sendResponse';
 
-const createAcademicDepartment: RequestHandler = catchAsync(async (req, res) => {
+const createAcademicDepartment: RequestHandler = catchAsync(
+  async (req, res) => {
     const academicDepartmentData = req.body;
-    const result = await AcademicDepartmentServices.createAcademicDepartmentIntoDB(academicDepartmentData);
+    const result =
+      await AcademicDepartmentServices.createAcademicDepartmentIntoDB(
+        academicDepartmentData,
+      );
 
     sendResponse(res, {
-        statusCode: 201,
-        success: true,
-        message: "Academic department created successfully",
-        data: result,
-    })
-})
+      statusCode: 201,
+      success: true,
+      message: 'Academic department created successfully',
+      data: result,
+    });
+  },
+);
 
-const getAllAcademicDepartment: RequestHandler = catchAsync(async (req, res) => {
-    const result = await AcademicDepartmentServices.getAllAcademicDepartmentFromDB();
+const getAllAcademicDepartment: RequestHandler = catchAsync(
+  async (req, res) => {
+    const result =
+      await AcademicDepartmentServices.getAllAcademicDepartmentFromDB();
 
     sendResponse(res, {
-        statusCode: 200,
-        success: true,
-        message: "Academic department ara retrived successfully",
-        data: result,
-    })
-})
+      statusCode: 200,
+      success: true,
+      message: 'Academic department ara retrived successfully',
+      data: result,
+    });
+  },
+);
 
-const getSingleAcademicDepartment: RequestHandler = catchAsync(async (req, res) => {
+const getSingleAcademicDepartment: RequestHandler = catchAsync(
+  async (req, res) => {
     const academicDepartmentId = req.params.academicDepartmentId;
-    const result = await AcademicDepartmentServices.getSingleAcademicDepartmentFromDB(academicDepartmentId);
+    const result =
+      await AcademicDepartmentServices.getSingleAcademicDepartmentFromDB(
+        academicDepartmentId,
+      );
 
     sendResponse(res, {
-        statusCode: 200,
-        success: true,
-        message: "Academic dapartment is retrieved successfully",
-        data: result,
-    })
-})
+      statusCode: 200,
+      success: true,
+      message: 'Academic dapartment is retrieved successfully',
+      data: result,
+    });
+  },
+);
 
-const updateAcademicDepartment: RequestHandler = catchAsync(async (req, res) => {
+const updateAcademicDepartment: RequestHandler = catchAsync(
+  async (req, res) => {
     const academicDepartmentId = req.params.academicDepartmentId;
-    const updatedData = req.params;
-    const result = await AcademicDepartmentServices.updateAcademicDepartmentInDB(academicDepartmentId, updatedData);
+    const updatedData = req.body;
+    const result =
+      await AcademicDepartmentServices.updateAcademicDepartmentInDB(
+        academicDepartmentId,
+        updatedData,
+      );
 
     sendResponse(res, {
-        statusCode: 200,
-        success: true,
-        message: "Academic department updated successfully",
-        data: result,
-    })
-})
+      statusCode: 200,
+      success: true,
+      message: 'Academic department updated successfully',
+      data: result,
+    });
+  },
+);
 
 export const AcademicDepartmentControllers = {
-    createAcademicDepartment,
-    getAllAcademicDepartment,
-    getSingleAcademicDepartment,
-    updateAcademicDepartment,
-}
+  createAcademicDepartment,
+  getAllAcademicDepartment,
+  getSingleAcademicDepartment,
+  updateAcademicDepartment,
+};
