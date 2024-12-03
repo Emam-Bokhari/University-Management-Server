@@ -9,4 +9,6 @@ router.get("/", AcademicDepartmentControllers.getAllAcademicDepartment)
 
 router.get("/:academicDepartmentId", AcademicDepartmentControllers.getSingleAcademicDepartment);
 
+router.patch("/:academicDepartmentId", AcademicDepartmentControllers.updateAcademicDepartment);
+
 export const AcademicDepartmentRoutes = router;
