@@ -11,6 +11,8 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>({
         type: Schema.Types.ObjectId,
         required: true,
     }
-})
+},
+    { timestamps: true }
+)
 
 export const AcademicDepartment = model<TAcademicDepartment>("AcademicDepartment", academicDepartmentSchema);
