@@ -4,6 +4,9 @@ import { TAcademicFaculty } from "./academicFaculty.interface";
 const academicFacultySchema = new Schema<TAcademicFaculty>({
     name: {
         type: String,
+        trim: true,
+        required: true,
+        unique: true,
     }
 })
 
