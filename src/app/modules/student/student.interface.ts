@@ -26,6 +26,7 @@ export type TStudent = {
   id: string;
   user: Types.ObjectId;
   admissionSemester: Types.ObjectId;
+  academicDepartment: Types.ObjectId;
   name: TUserName;
   profileImage?: string;
   gender: 'male' | 'female';
