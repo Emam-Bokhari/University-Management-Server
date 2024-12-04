@@ -3,7 +3,6 @@ import { AcademicDepartment } from './academicDepartment.model';
 
 const createAcademicDepartmentIntoDB = async (payload: TAcademicDepartment) => {
 
-
   const result = await AcademicDepartment.create(payload);
   return result;
 };
@@ -26,8 +25,8 @@ const updateAcademicDepartmentInDB = async (
   academicDepartmentId: string,
   payload: Partial<TAcademicDepartment>,
 ) => {
-  const result = await AcademicDepartment.findByIdAndUpdate(
-    academicDepartmentId,
+  const result = await AcademicDepartment.findOneAndUpdate(
+    { _id: academicDepartmentId },
     payload,
     { new: true },
   );
