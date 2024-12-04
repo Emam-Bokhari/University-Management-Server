@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import { StudentModel, TStudent, TUserName } from './student.interface';
+import AppError from '../../errors/AppError';
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -162,17 +163,26 @@ const studentSchema = new Schema<TStudent, StudentModel>({
 });
 
 // aggregate middleware
-studentSchema.pre('find', function (next) {
+studentSchema.pre('find', async function (next) {
   this.find({ isDeleted: { $ne: true } });
   next();
 });
 
-studentSchema.pre('findOne', function (next) {
+studentSchema.pre('findOne', async function (next) {
   this.findOne({ isDeleted: { $ne: true } });
   next();
 });
 
-studentSchema.pre('aggregate', function (next) {
+studentSchema.pre("findOneAndUpdate", async function (next) {
+  const query = this.getQuery();
+  const isExist = await Student.findOne({ id: query.id });
+  if (!isExist) {
+    throw new AppError(404, "The student does not exist!")
+  }
+  next();
+})
+
+studentSchema.pre('aggregate', async function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
   next();
 });
