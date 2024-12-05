@@ -1,13 +1,13 @@
 import express from 'express';
 import { UserControllers } from './user.controller';
-import { createStudentValidationSchema } from '../student/student.validation';
 import { validateRequest } from '../../middlewares/validateRequest';
+import { studentValidationSchema } from '../student/student.validation';
 
 const router = express.Router();
 
 router.post(
   '/create-student',
-  validateRequest(createStudentValidationSchema),
+  validateRequest(studentValidationSchema.createStudentValidationSchema),
   UserControllers.createStudent,
 );
 

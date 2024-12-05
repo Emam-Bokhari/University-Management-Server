@@ -95,8 +95,8 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   },
   academicDepartment: {
     type: Schema.ObjectId,
-    required: [true, "Academic department ID is required"],
-    ref: "AcademicDepartment"
+    required: [true, 'Academic department ID is required'],
+    ref: 'AcademicDepartment',
   },
   name: {
     type: userNameSchema,
@@ -173,14 +173,14 @@ studentSchema.pre('findOne', async function (next) {
   next();
 });
 
-studentSchema.pre("findOneAndUpdate", async function (next) {
+studentSchema.pre('findOneAndUpdate', async function (next) {
   const query = this.getQuery();
   const isExist = await Student.findOne({ id: query.id });
   if (!isExist) {
-    throw new AppError(404, "The student does not exist!")
+    throw new AppError(404, 'The student does not exist!');
   }
   next();
-})
+});
 
 studentSchema.pre('aggregate', async function (next) {
   this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });

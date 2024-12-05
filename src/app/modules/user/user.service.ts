@@ -30,7 +30,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
   const session = await mongoose.startSession();
 
   try {
-    session.startTransaction()
+    session.startTransaction();
     // set manually generated if
     userData.id = await generateStudentId(admissionSemester);
 
@@ -40,7 +40,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
     // create a student
     if (!newUser.length) {
-      throw new AppError(400, "Failed to create user!")
+      throw new AppError(400, 'Failed to create user!');
     }
 
     payload.id = newUser[0].id; // embedding ID
@@ -50,16 +50,15 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     const newStudent = await Student.create([payload], { session });
 
     if (!newStudent.length) {
-      throw new AppError(400, "Failed to create student!")
+      throw new AppError(400, 'Failed to create student!');
     }
-    await session.commitTransaction()
-    await session.endSession()
+    await session.commitTransaction();
+    await session.endSession();
 
     return newStudent;
-
   } catch (err) {
-    await session.abortTransaction()
-    await session.endSession()
+    await session.abortTransaction();
+    await session.endSession();
     throw err;
   }
 };
