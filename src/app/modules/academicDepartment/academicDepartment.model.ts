@@ -8,7 +8,7 @@ const academicDepartmentSchema = new Schema<TAcademicDepartment>(
       type: String,
       trim: true,
       required: true,
-      unique: true,
+      // unique: true,
     },
     academicFaculty: {
       type: Schema.Types.ObjectId,
