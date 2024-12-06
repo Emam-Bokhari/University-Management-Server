@@ -19,21 +19,19 @@ async function main() {
 
 main();
 
-// asynchronous 
-process.on("unhandledRejection", () => {
-  console.log(`👿 unhandledRejection is detected, shutting down...`)
+// asynchronous
+process.on('unhandledRejection', () => {
+  console.log(`👿 unhandledRejection is detected, shutting down...`);
   if (server) {
     server.close(() => {
-      process.exit(1)
-    })
+      process.exit(1);
+    });
   }
-  process.exit(1)
-})
+  process.exit(1);
+});
 
 // synchornous
-process.on("uncaughtException", () => {
-  console.log(`👿 uncaughtExecption is detected, shutting down...`)
-  process.exit(1)
-})
-
-
+process.on('uncaughtException', () => {
+  console.log(`👿 uncaughtExecption is detected, shutting down...`);
+  process.exit(1);
+});

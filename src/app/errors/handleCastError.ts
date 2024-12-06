@@ -1,20 +1,21 @@
-import mongoose from "mongoose";
-import { TErrorSource, TGenericErrorResponse } from "../interface/error";
+import mongoose from 'mongoose';
+import { TErrorSource, TGenericErrorResponse } from '../interface/error';
 
-export const handleCastError = (err: mongoose.Error.CastError): TGenericErrorResponse => {
+export const handleCastError = (
+  err: mongoose.Error.CastError,
+): TGenericErrorResponse => {
+  const errorSources: TErrorSource = [
+    {
+      path: err?.path,
+      message: err?.message,
+    },
+  ];
 
-    const errorSources: TErrorSource = [
-        {
-            path: err?.path,
-            message: err?.message,
-        }
-    ]
+  const statusCode = 400;
 
-    const statusCode = 400;
-
-    return {
-        statusCode,
-        message: "Invalid ID",
-        errorSources,
-    }
-}
+  return {
+    statusCode,
+    message: 'Invalid ID',
+    errorSources,
+  };
+};

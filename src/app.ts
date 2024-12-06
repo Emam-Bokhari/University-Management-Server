@@ -9,11 +9,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const test = async (req, res) => {
-  Promise.reject()
-}
+// const test = async (req, res) => {
+//   Promise.reject()
+// }
 
-app.get("/", test)
+// app.get("/", test)
 
 // application routes
 app.use('/api/v1/', router);
