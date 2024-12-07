@@ -9,7 +9,6 @@ router.get('/', StudentControllers.getAllStudents);
 
 router.get(
   '/:studentId',
-  validateRequest(studentValidationSchema.createStudentValidationSchema),
   StudentControllers.getSingleStudent,
 );
 

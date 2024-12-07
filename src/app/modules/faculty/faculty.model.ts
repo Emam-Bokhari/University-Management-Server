@@ -99,6 +99,7 @@ const facultySchema = new Schema(
     }
 );
 
+
 // query middleware
 facultySchema.pre("find", async function (next) {
     this.find({ isDeleted: { $ne: true } });
@@ -119,6 +120,9 @@ facultySchema.pre("updateOne", async function (next) {
     }
     next()
 })
+
+
+
 
 // aggregate middleware
 facultySchema.pre("aggregate", async function (next) {

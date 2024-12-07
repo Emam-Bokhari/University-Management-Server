@@ -72,17 +72,38 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
 
   facultyData.role = "faculty";
 
-  facultyData.id = await generateFacultyId()
-  // create a new user
-  const newUser = await User.create([facultyData]);
+
+  const session = await mongoose.startSession();
+
+  try {
+    session.startTransaction()
+    facultyData.id = await generateFacultyId()
+    // create a new user
+    const newUser = await User.create([facultyData], { session });
+
+    if (!newUser.length) {
+      throw new AppError(400, "Failed to create user!");
+    }
 
 
-  payload.id = newUser[0].id;
-  payload.user = newUser[0]._id;
+    payload.id = newUser[0].id;
+    payload.user = newUser[0]._id;
 
-  const result = await Faculty.create(payload);
+    const newFaculty = await Faculty.create([payload], { session });
 
-  return result;
+    if (!newFaculty.length) {
+      throw new AppError(400, "Failed to create faculty!");
+    }
+
+    await session.commitTransaction();
+    await session.endSession()
+
+    return newFaculty;
+  } catch (err) {
+    await session.abortTransaction()
+    await session.endSession()
+    throw err;
+  }
 
 
 }
