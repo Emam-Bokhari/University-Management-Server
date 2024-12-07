@@ -3,7 +3,7 @@ import { catchAsync } from "../../utils/catchAsync";
 import { FacultyServices } from "./faculty.service";
 import sendResponse from "../../utils/sendResponse";
 
-const getAllFaculty: RequestHandler = catchAsync(async (req, res) => {
+const getAllFaculties: RequestHandler = catchAsync(async (req, res) => {
 
     const result = await FacultyServices.getAllFacultyFromDB();
 
@@ -54,7 +54,7 @@ const deleteFaculty: RequestHandler = catchAsync(async (req, res) => {
 })
 
 export const FacultyControllers = {
-    getAllFaculty,
+    getAllFaculties,
     getSingleFaculty,
     updateFaculty,
     deleteFaculty,

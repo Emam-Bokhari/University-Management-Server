@@ -6,19 +6,22 @@ type TName = {
     lastName: string;
 }
 
+type TBloodGroup = "A+" | "A-" | "B+" | "B-" | "AB+" | "AB-" | "O+" | "O-";
+
 export type TFaculty = {
     id: string;
     user: Types.ObjectId;
     name: TName,
     designation: string;
     gender: ["male", "female"];
-    dateOfBirth: string;
+    dateOfBirth?: string;
     email: string;
     contactNo: string;
     emergencyContactNo: string;
+    bloodGroup?: TBloodGroup;
     presentAddress: string;
-    profileImage: string;
-    academicFaculty: string;
-    academicDepartment: string;
+    permanentAddress: string;
+    profileImage?: string;
+    academicDepartment: Types.ObjectId;
     isDeleted: boolean;
 }

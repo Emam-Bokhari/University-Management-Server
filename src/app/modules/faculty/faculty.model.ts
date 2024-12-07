@@ -18,6 +18,7 @@ const facultyNameSchema = new Schema({
     },
 });
 
+
 const facultySchema = new Schema(
     {
         id: {
@@ -37,7 +38,6 @@ const facultySchema = new Schema(
         },
         designation: {
             type: String,
-            required: true,
         },
         gender: {
             type: String,
@@ -66,22 +66,27 @@ const facultySchema = new Schema(
             trim: true,
             required: true,
         },
+        bloodGroup: {
+            type: String,
+            enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+        },
         presentAddress: {
+            type: String,
+            trim: true,
+            required: true,
+        },
+        permanentAddress: {
             type: String,
             trim: true,
             required: true,
         },
         profileImage: {
             type: String,
-            required: true,
-        },
-        academicFaculty: {
-            type: String,
-            required: true,
         },
         academicDepartment: {
-            type: String,
+            type: Schema.ObjectId,
             required: true,
+            ref: "AcademicDepartment"
         },
         isDeleted: {
             type: Boolean,
@@ -92,5 +97,19 @@ const facultySchema = new Schema(
         timestamps: true,
     }
 );
+
+// query middleware
+facultySchema.pre("find", async function () {
+    this.find({ isDeleted: { $ne: true } });
+})
+
+facultySchema.pre("findOne", async function () {
+    this.find({ isDeleted: { $ne: true } });
+})
+
+// aggregate middleware
+facultySchema.pre("aggregate", async function () {
+    this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
+})
 
 export const Faculty = model<TFaculty>("Faculty", facultySchema);

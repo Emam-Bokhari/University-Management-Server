@@ -22,10 +22,10 @@ const createFacultyValidationSchema = z.object({
             email: z.string(),
             contactNo: z.string(),
             emergencyContactNo: z.string(),
+            bloodGroup: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]),
             presentAddress: z.string(),
+            permanentAddress: z.string(),
             profileImage: z.string(),
-            academicFaculty: z.string(),
-            academicDepartment: z.string(),
             isDeleted: z.boolean().default(false),
         })
     })
@@ -41,10 +41,10 @@ const updateFacultyValidationSchema = z.object({
             email: z.string().optional(),
             contactNo: z.string().optional(),
             emergencyContactNo: z.string().optional(),
+            bloodGroup: z.enum(["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]).optional(),
             presentAddress: z.string().optional(),
+            permanentAddress: z.string().optional(),
             profileImage: z.string().optional(),
-            academicFaculty: z.string().optional(),
-            academicDepartment: z.string().optional(),
             isDeleted: z.boolean().default(false).optional(),
         })
     })
