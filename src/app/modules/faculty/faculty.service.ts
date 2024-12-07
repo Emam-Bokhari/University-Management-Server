@@ -1,5 +1,8 @@
+import mongoose from "mongoose";
 import { TFaculty } from "./faculty.interface";
 import { Faculty } from "./faculty.model"
+import AppError from "../../errors/AppError";
+import { User } from "../user/user.model";
 
 const getAllFacultyFromDB = async () => {
     const result = await Faculty.find();
@@ -32,9 +35,35 @@ const updateFacultyIntoDB = async (facultyId: string, payload: Partial<TFaculty>
 }
 
 const deleteFacultyFromDB = async (facultyId: string) => {
-    const result = await Faculty.updateOne({ id: facultyId }, { isDeleted: true }, { new: true })
 
-    return result;
+    const session = await mongoose.startSession();
+
+
+
+    try {
+        session.startTransaction()
+
+        const deletedFaculty = await Faculty.findOneAndUpdate({ id: facultyId }, { isDeleted: true }, { new: true, session })
+
+        if (!deletedFaculty) {
+            throw new AppError(400, "Failed to delete faculty!");
+        }
+
+        const deleteUser = await User.findOneAndUpdate({ id: facultyId }, { isDeleted: true }, { new: true, session })
+
+        if (!deleteUser) {
+            throw new AppError(400, "Failed to delete user!");
+        }
+
+        await session.commitTransaction();
+        await session.endSession();
+
+        return deletedFaculty;
+    } catch (err) {
+        await session.abortTransaction()
+        await session.endSession()
+        throw err;
+    }
 }
 
 export const FacultyServices = {
