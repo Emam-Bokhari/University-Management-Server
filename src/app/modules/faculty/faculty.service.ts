@@ -6,6 +6,13 @@ const getAllFacultyFromDB = async () => {
     return result;
 }
 
+const getSingleFacultyFromDB = async (facultyId: string) => {
+    const result = await Faculty.findOne({ _id: facultyId });
+
+    return result;
+}
+
 export const FacultyServices = {
     getAllFacultyFromDB,
+    getSingleFacultyFromDB,
 }
