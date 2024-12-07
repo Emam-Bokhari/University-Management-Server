@@ -8,7 +8,7 @@ const getAllFacultyFromDB = async () => {
 }
 
 const getSingleFacultyFromDB = async (facultyId: string) => {
-    const result = await Faculty.findOne({ _id: facultyId });
+    const result = await Faculty.findOne({ id: facultyId });
 
     return result;
 }
