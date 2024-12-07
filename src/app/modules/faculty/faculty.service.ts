@@ -14,7 +14,19 @@ const getSingleFacultyFromDB = async (facultyId: string) => {
 }
 
 const updateFacultyIntoDB = async (facultyId: string, payload: Partial<TFaculty>) => {
-    const result = await Faculty.updateOne({ id: facultyId }, payload, { new: true })
+    const { name, ...remainingFacultyData } = payload;
+
+    const modefiedUpdatedData: Record<string, unknown> = {
+        ...remainingFacultyData
+    }
+
+    if (name && Object.keys(name).length) {
+        for (const [key, value] of Object.entries(name)) {
+            modefiedUpdatedData[`name.${key}`] = value;
+        }
+    }
+
+    const result = await Faculty.updateOne({ id: facultyId }, modefiedUpdatedData, { new: true })
 
     return result;
 }
