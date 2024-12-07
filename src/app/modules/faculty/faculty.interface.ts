@@ -9,8 +9,8 @@ type TName = {
 export type TFaculty = {
     id: string;
     user: Types.ObjectId;
-    designation: string;
     name: TName,
+    designation: string;
     gender: ["male", "female"];
     dateOfBirth: string;
     email: string;
