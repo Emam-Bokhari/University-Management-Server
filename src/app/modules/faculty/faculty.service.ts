@@ -19,8 +19,15 @@ const updateFacultyIntoDB = async (facultyId: string, payload: Partial<TAcademic
     return result;
 }
 
+const deleteFacultyFromDB = async (facultyId: string) => {
+    const result = await Faculty.updateOne({ id: facultyId }, { isDeleted: true }, { new: true })
+
+    return result;
+}
+
 export const FacultyServices = {
     getAllFacultyFromDB,
     getSingleFacultyFromDB,
     updateFacultyIntoDB,
+    deleteFacultyFromDB,
 }
