@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { TFaculty } from "./faculty.interface";
+import AppError from "../../errors/AppError";
 
 const facultyNameSchema = new Schema({
     firstName: {
@@ -99,17 +100,30 @@ const facultySchema = new Schema(
 );
 
 // query middleware
-facultySchema.pre("find", async function () {
+facultySchema.pre("find", async function (next) {
     this.find({ isDeleted: { $ne: true } });
+    next()
 })
 
-facultySchema.pre("findOne", async function () {
+facultySchema.pre("findOne", async function (next) {
     this.find({ isDeleted: { $ne: true } });
+    next()
+})
+
+facultySchema.pre("updateOne", async function (next) {
+    const query = this.getQuery();
+    const isExist = await Faculty.findOne({ id: query.id });
+
+    if (!isExist) {
+        throw new AppError(400, "This faculty ID does not exist!")
+    }
+    next()
 })
 
 // aggregate middleware
-facultySchema.pre("aggregate", async function () {
+facultySchema.pre("aggregate", async function (next) {
     this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } })
+    next()
 })
 
 export const Faculty = model<TFaculty>("Faculty", facultySchema);
