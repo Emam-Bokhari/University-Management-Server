@@ -26,11 +26,10 @@ const createFaculty: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 201,
     success: true,
-    message: "Faculty is created successfully",
+    message: 'Faculty is created successfully',
     data: result,
-  })
-
-})
+  });
+});
 
 export const UserControllers = {
   createStudent,
