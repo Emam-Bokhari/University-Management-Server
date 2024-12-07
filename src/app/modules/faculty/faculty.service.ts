@@ -3,16 +3,29 @@ import { TFaculty } from './faculty.interface';
 import { Faculty } from './faculty.model';
 import AppError from '../../errors/AppError';
 import { User } from '../user/user.model';
+import QueryBuilder from '../../builder/QueryBuilder';
+import { searchableFields } from './faculty.constant';
 
-const getAllFacultyFromDB = async () => {
-  const result = await Faculty.find()
-    .populate('user')
-    .populate({
-      path: 'academicDepartment',
-      populate: {
-        path: 'academicFaculty',
-      },
-    });
+const getAllFacultyFromDB = async (query: Record<string, unknown>) => {
+  const facultyQuery = new QueryBuilder(
+    Faculty.find()
+      .populate('user')
+      .populate({
+        path: 'academicDepartment',
+        populate: {
+          path: 'academicFaculty',
+        },
+      }),
+    query,
+  )
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+
+  // const result = await Faculty.find()
+  const result = await facultyQuery.modelQuery;
 
   return result;
 };
