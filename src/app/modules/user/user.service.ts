@@ -6,7 +6,7 @@ import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
-import { generateStudentId } from './user.utils';
+import { generateFacultyId, generateStudentId } from './user.utils';
 import { TFaculty } from '../faculty/faculty.interface';
 import { Faculty } from '../faculty/faculty.model';
 
@@ -71,6 +71,14 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   facultyData.password = password || (config.default_Pass as string);
 
   facultyData.role = "faculty";
+
+  facultyData.id = await generateFacultyId()
+  // create a new user
+  const newUser = await User.create([facultyData]);
+
+
+  payload.id = newUser[0].id;
+  payload.user = newUser[0]._id;
 
   const result = await Faculty.create(payload);
 
