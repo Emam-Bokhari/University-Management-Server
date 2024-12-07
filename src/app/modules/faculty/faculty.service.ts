@@ -1,4 +1,4 @@
-import { TAcademicFaculty } from "../academicFaculty/academicFaculty.interface";
+import { TFaculty } from "./faculty.interface";
 import { Faculty } from "./faculty.model"
 
 const getAllFacultyFromDB = async () => {
@@ -13,7 +13,7 @@ const getSingleFacultyFromDB = async (facultyId: string) => {
     return result;
 }
 
-const updateFacultyIntoDB = async (facultyId: string, payload: Partial<TAcademicFaculty>) => {
+const updateFacultyIntoDB = async (facultyId: string, payload: Partial<TFaculty>) => {
     const result = await Faculty.updateOne({ id: facultyId }, payload, { new: true })
 
     return result;

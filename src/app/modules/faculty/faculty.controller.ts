@@ -30,7 +30,7 @@ const getSingleFaculty: RequestHandler = catchAsync(async (req, res) => {
 
 const updateFaculty: RequestHandler = catchAsync(async (req, res) => {
     const facultyId = req.params.facultyId;
-    const updatedData = req.body;
+    const updatedData = req.body.faculty;
     const result = await FacultyServices.updateFacultyIntoDB(facultyId, updatedData);
 
     sendResponse(res, {
