@@ -16,7 +16,7 @@ const createCourse: RequestHandler = catchAsync(async (req, res) => {
 })
 
 const getAllCourses: RequestHandler = catchAsync(async (req, res) => {
-    const result = await CourseServices.getAllCoursesFromDB();
+    const result = await CourseServices.getAllCoursesFromDB(req.query);
 
     sendResponse(res, {
         statusCode: 200,

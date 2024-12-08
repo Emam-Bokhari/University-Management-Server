@@ -1,9 +1,11 @@
 import express from "express";
 import { CourseControllers } from "./course.controller";
+import { validateRequest } from "../../middlewares/validateRequest";
+import { courseValidationSchema } from "./course.validation";
 
 const router = express.Router();
 
-router.post("/create-course", CourseControllers.createCourse);
+router.post("/create-course", validateRequest(courseValidationSchema.createCourseValidationSchema), CourseControllers.createCourse);
 
 router.get("/", CourseControllers.getAllCourses);
 
