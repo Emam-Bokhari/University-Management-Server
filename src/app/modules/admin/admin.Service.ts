@@ -6,6 +6,13 @@ const getAllAdminFromDB = async () => {
     return result;
 }
 
+const getSingleAdminFromDB = async (adminId: string) => {
+    const result = await Admin.findOne({ id: adminId })
+
+    return result;
+}
+
 export const AdminServices = {
     getAllAdminFromDB,
+    getSingleAdminFromDB,
 }
