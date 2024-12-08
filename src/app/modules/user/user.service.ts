@@ -9,6 +9,8 @@ import { User } from './user.model';
 import { generateFacultyId, generateStudentId } from './user.utils';
 import { TFaculty } from '../faculty/faculty.interface';
 import { Faculty } from '../faculty/faculty.model';
+import { TAdmin } from '../admin/admin.interface';
+import { Admin } from '../admin/admin.model';
 
 const createStudentIntoDB = async (password: string, payload: TStudent) => {
   // create a user object
@@ -107,9 +109,31 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   }
 };
 
+const createAdminIntoDB = async (password: string, payload: TAdmin) => {
+  const adminData: Partial<TUser> = {}
+
+  adminData.password = password || (config.default_Pass as string);
+
+  adminData.role = "admin";
+
+  adminData.id = "A-0001";
+
+  const newUser = await User.create([adminData])
+
+  payload.id = newUser[0].id;
+  payload.user = newUser[0]._id;
+
+  const newAdmin = await Admin.create(payload)
+
+  return newAdmin;
+
+
+}
+
 export const UserServices = {
   createStudentIntoDB,
   createFacultyIntoDB,
+  createAdminIntoDB,
 };
 
 /* 
