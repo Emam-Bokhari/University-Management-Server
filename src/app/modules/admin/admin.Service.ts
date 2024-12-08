@@ -1,3 +1,4 @@
+import { TAdmin } from "./admin.interface";
 import { Admin } from "./admin.model"
 
 const getAllAdminFromDB = async () => {
@@ -12,7 +13,14 @@ const getSingleAdminFromDB = async (adminId: string) => {
     return result;
 }
 
+const updateAdminIntoDB = async (adminId: string, payload: Partial<TAdmin>) => {
+    const result = await Admin.updateOne({ id: adminId }, payload, { new: true })
+
+    return result;
+}
+
 export const AdminServices = {
     getAllAdminFromDB,
     getSingleAdminFromDB,
+    updateAdminIntoDB,
 }
