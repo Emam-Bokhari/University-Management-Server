@@ -19,8 +19,15 @@ const updateAdminIntoDB = async (adminId: string, payload: Partial<TAdmin>) => {
     return result;
 }
 
+const deleteAdminFromDB = async (adminId: string) => {
+    const result = await Admin.updateOne({ id: adminId }, { isDeleted: true }, { new: true })
+
+    return result;
+}
+
 export const AdminServices = {
     getAllAdminFromDB,
     getSingleAdminFromDB,
     updateAdminIntoDB,
+    deleteAdminFromDB,
 }
