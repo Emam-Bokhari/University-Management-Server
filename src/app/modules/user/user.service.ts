@@ -77,6 +77,8 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
   try {
     session.startTransaction();
     facultyData.id = await generateFacultyId();
+
+    // transction:1
     // create a new user
     const newUser = await User.create([facultyData], { session });
 
@@ -87,6 +89,7 @@ const createFacultyIntoDB = async (password: string, payload: TFaculty) => {
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
 
+    // transction:2
     const newFaculty = await Faculty.create([payload], { session });
 
     if (!newFaculty.length) {
