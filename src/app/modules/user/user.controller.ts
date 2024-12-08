@@ -40,10 +40,10 @@ const createAdmin: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 201,
     success: true,
-    message: "Admin is created successfully",
+    message: 'Admin is created successfully',
     data: result,
-  })
-})
+  });
+});
 
 export const UserControllers = {
   createStudent,

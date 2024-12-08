@@ -35,9 +35,9 @@ const moduleRoutes = [
     route: FacultyRoutes,
   },
   {
-    path: "/admins",
+    path: '/admins',
     route: AdminRoutes,
-  }
+  },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
