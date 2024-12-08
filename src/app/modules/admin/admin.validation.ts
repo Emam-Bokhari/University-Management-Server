@@ -53,6 +53,6 @@ const updateAdminValidationSchema = z.object({
 });
 
 export const adminValidationSchema = {
-  createFacultyValidationSchema: createAdminValidationSchema,
-  updateFacultyValidationSchema: updateAdminValidationSchema,
+  createAdminValidationSchema,
+  updateAdminValidationSchema,
 };

@@ -23,10 +23,12 @@ const adminSchema = new Schema<TAdmin>(
     id: {
       type: String,
       required: [true, 'ID is required'],
+      unique: true,
     },
     user: {
       type: Schema.ObjectId,
       required: [true, 'User ID is required'],
+      unique: true,
     },
     name: {
       type: TUserNameSchema,
@@ -52,6 +54,7 @@ const adminSchema = new Schema<TAdmin>(
       type: String,
       trim: true,
       required: true,
+      unique: true,
     },
     contactNo: {
       type: String,
