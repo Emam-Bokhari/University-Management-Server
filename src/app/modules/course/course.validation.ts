@@ -1,9 +1,10 @@
 import { z } from "zod";
 
-const createPreRequisiteCourses = z.object({
+const preRequisiteCourses = z.object({
     course: z.string(),
     isDeleted: z.boolean().optional(),
 })
+
 
 const createCourseValidationSchema = z.object({
     body: z.object({
@@ -11,11 +12,24 @@ const createCourseValidationSchema = z.object({
         prefix: z.string(),
         code: z.number(),
         credits: z.number(),
-        preRequisiteCourses: z.array(createPreRequisiteCourses).optional()
+        preRequisiteCourses: z.array(preRequisiteCourses).optional(),
+        isDeleted: z.boolean().optional(),
+    })
+})
+
+const updateCourseValidationSchema = z.object({
+    body: z.object({
+        title: z.string().optional(),
+        prefix: z.string().optional(),
+        code: z.number().optional(),
+        credits: z.number().optional(),
+        preRequisiteCourses: z.array(preRequisiteCourses).optional(),
+        isDeleted: z.boolean().optional(),
     })
 })
 
 
 export const courseValidationSchema = {
     createCourseValidationSchema,
+    updateCourseValidationSchema,
 }
