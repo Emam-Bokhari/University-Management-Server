@@ -33,7 +33,7 @@ const createAdminValidationSchema = z.object({
 
 const updateAdminValidationSchema = z.object({
   body: z.object({
-    faculty: z.object({
+    admin: z.object({
       name: updateUserNameValidationSchema.optional(),
       designation: z.string().optional(),
       gender: z.enum(['male', 'female']).optional(),

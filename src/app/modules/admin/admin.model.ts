@@ -1,5 +1,6 @@
 import { model, Schema } from 'mongoose';
 import { TAdmin } from './admin.interface';
+import AppError from '../../errors/AppError';
 
 const TUserNameSchema = new Schema({
   firstName: {
@@ -93,5 +94,37 @@ const adminSchema = new Schema<TAdmin>(
     timestamps: true,
   },
 );
+
+
+// query middleware
+adminSchema.pre("find", async function (next) {
+  this.find({ isDeleted: { $ne: true } })
+
+  next()
+})
+
+adminSchema.pre("findOne", async function (next) {
+  this.findOne({ isDeleted: { $ne: true } });
+
+  next();
+})
+
+adminSchema.pre("updateOne", async function (next) {
+  const query = this.getQuery();
+
+  const isExist = await Admin.findOne({ id: query.id });
+
+  if (!isExist) {
+    throw new AppError(400, "This Admin ID does not exist!")
+  }
+  next()
+})
+
+// aggregate middleware
+adminSchema.pre("aggregate", async function (next) {
+  this.pipeline().unshift({ $match: { isDeleted: { $ne: true } } });
+
+  next()
+})
 
 export const Admin = model<TAdmin>('Admin', adminSchema);
