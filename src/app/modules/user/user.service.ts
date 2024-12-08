@@ -116,17 +116,37 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 
   adminData.role = "admin";
 
-  adminData.id = await generateAdminId()
+  const session = await mongoose.startSession();
 
-  const newUser = await User.create([adminData])
+  try {
+    session.startTransaction();
+    adminData.id = await generateAdminId()
 
-  payload.id = newUser[0].id;
-  payload.user = newUser[0]._id;
+    const newUser = await User.create([adminData], { session })
 
-  const newAdmin = await Admin.create(payload)
+    if (!newUser.length) {
+      throw new AppError(400, "Failed to create a user");
+    }
 
-  return newAdmin;
+    payload.id = newUser[0].id;
+    payload.user = newUser[0]._id;
 
+    const newAdmin = await Admin.create([payload], { session })
+
+    if (!newAdmin.length) {
+      throw new AppError(400, "Failed to create admin");
+    }
+
+    await session.commitTransaction();
+    await session.endSession()
+
+    return newAdmin;
+
+  } catch (err) {
+    await session.abortTransaction()
+    await session.endSession();
+    throw err;
+  }
 
 }
 
