@@ -75,3 +75,32 @@ export const generateFacultyId = async () => {
   // Return the new faculty ID with "f-" prefix
   return `F-${currentId}`;
 };
+
+const findLastAdminId = async () => {
+  const lastAdminId = await User.findOne(
+    {
+      role: "admin",
+    },
+    {
+      id: 1,
+      _id: 0
+    }
+  ).sort({
+    createdAt: -1
+  }).lean()
+
+  return lastAdminId?.id ? lastAdminId?.id : null;
+}
+
+export const generateAdminId = async () => {
+  let currentId = (0).toString().padStart(4, "0");
+
+  const lastAdminId = await findLastAdminId();
+
+  if (lastAdminId) {
+    const currentIdNumber = lastAdminId.substring(2);
+    currentId = (parseInt(currentIdNumber) + 1).toString().padStart(4, "0");
+  }
+
+  return `A-${currentId}`
+}

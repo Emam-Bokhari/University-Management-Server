@@ -6,7 +6,7 @@ import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
 import { TUser } from './user.interface';
 import { User } from './user.model';
-import { generateFacultyId, generateStudentId } from './user.utils';
+import { generateAdminId, generateFacultyId, generateStudentId } from './user.utils';
 import { TFaculty } from '../faculty/faculty.interface';
 import { Faculty } from '../faculty/faculty.model';
 import { TAdmin } from '../admin/admin.interface';
@@ -116,7 +116,7 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 
   adminData.role = "admin";
 
-  adminData.id = "A-0001";
+  adminData.id = await generateAdminId()
 
   const newUser = await User.create([adminData])
 
