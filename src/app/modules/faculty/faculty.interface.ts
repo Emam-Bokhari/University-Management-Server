@@ -13,7 +13,7 @@ export type TFaculty = {
   user: Types.ObjectId;
   name: TName;
   designation: string;
-  gender: ['male', 'female'];
+  gender: 'male' | 'female';
   dateOfBirth?: string;
   email: string;
   contactNo: string;

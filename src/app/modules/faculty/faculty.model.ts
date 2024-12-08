@@ -19,7 +19,7 @@ const facultyNameSchema = new Schema({
   },
 });
 
-const facultySchema = new Schema(
+const facultySchema = new Schema<TFaculty>(
   {
     id: {
       type: String,
