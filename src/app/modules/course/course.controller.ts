@@ -72,7 +72,7 @@ const assignCourseFaculties: RequestHandler = catchAsync(async (req, res) => {
     sendResponse(res, {
         statusCode: 200,
         success: true,
-        message: "Create Course faculties",
+        message: "Faculties assigned successfully",
         data: result,
     })
 })
