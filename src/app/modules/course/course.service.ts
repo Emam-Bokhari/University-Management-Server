@@ -40,10 +40,19 @@ const updateCourseIntoDB = async (courseId: string, payload: Partial<TCourse>) =
             }
         )
 
+        // filter out the new course fields
+        const newPreRequsites = preRequisiteCourses?.filter((el) => el.course && !el.isDeleted)
+
+        const newPreRequsitesCourses = await Course.findByIdAndUpdate(courseId, {
+            $addToSet: { preRequisiteCourses: { $each: newPreRequsites } }
+        })
 
     }
 
-    return updatedBasicCourseInfo;
+    const result = await Course.findById(courseId).populate("preRequisiteCourses.course")
+
+
+    return result;
 }
 
 const deleteCourseFromDB = async (courseId: string) => {
