@@ -13,7 +13,7 @@ router.get("/:courseId", CourseControllers.getSingleCourse);
 
 router.patch("/:courseId", validateRequest(courseValidationSchema.updateCourseValidationSchema), CourseControllers.updateCourse)
 
-router.put("/:courseId/assign-faculties")
+router.put("/:courseId/assign-faculties", CourseControllers.assignCourseFaculties)
 
 router.delete("/:courseId", CourseControllers.deleteCourse);
 
