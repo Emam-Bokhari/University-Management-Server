@@ -41,13 +41,13 @@ const moduleRoutes = [
     route: AdminRoutes,
   },
   {
-    path: "/courses",
-    route: CourseRoutes
+    path: '/courses',
+    route: CourseRoutes,
   },
   {
-    path: "/semester-registrations",
-    route: SemesterRegistrationRoutes
-  }
+    path: '/semester-registrations',
+    route: SemesterRegistrationRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));

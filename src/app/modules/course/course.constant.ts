@@ -1,1 +1,1 @@
-export const searchableFields = ["title", "prefix"]
+export const searchableFields = ['title', 'prefix'];
