@@ -100,7 +100,7 @@ const assignCourseFacultiesIntoDB = async (courseId: string, payload: Partial<TC
 }
 
 const deleteCourseFacultiesFromDB = async (courseId: string, payload: Partial<TCourseFaculty>) => {
-    const result = await CourseFaculty.findByIdAndUpdate(courseId, { $pull: { $in: payload } })
+    const result = await CourseFaculty.findByIdAndUpdate(courseId, { $pull: { faculties: { $in: payload } } }, { new: true })
 
     return result;
 }
