@@ -32,7 +32,14 @@ const getAllSemesterRegistrationFromDB = async () => {
     return result;
 }
 
+const getSingleSemesterRegistrationFromDB = async (semesterRegistrationId: string) => {
+    const result = await SemesterRegistration.findById(semesterRegistrationId)
+
+    return result;
+}
+
 export const SemesterRegistrationServices = {
     createSemesterRegistrationIntoDB,
     getAllSemesterRegistrationFromDB,
+    getSingleSemesterRegistrationFromDB,
 }
