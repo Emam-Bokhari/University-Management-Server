@@ -3,22 +3,24 @@ import AppError from '../../errors/AppError';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TSemesterRegistration } from './semesterRegistration.interface';
 import { SemesterRegistration } from './semesterRegistration.model';
+import { RegistrationStatus } from './semesterRegistrationConstant';
 
 const createSemesterRegistrationIntoDB = async (
   payload: TSemesterRegistration,
 ) => {
   const academicSemester = payload?.academicSemester;
 
-  // check if there any registered semester that is already "UPCOMING"/"ONGOING" 
-  const isThereAnyUpcomingOrOngoingSemester = await SemesterRegistration.findOne({
-    $or: [
-      { status: "UPCOMING" },
-      { status: "ONGOING" }
-    ]
-  });
+  // check if there any registered semester that is already "UPCOMING"/"ONGOING"
+  const isThereAnyUpcomingOrOngoingSemester =
+    await SemesterRegistration.findOne({
+      $or: [{ status: RegistrationStatus.UPCOMING }, { status: RegistrationStatus.ONGOING }],
+    });
 
   if (isThereAnyUpcomingOrOngoingSemester) {
-    throw new AppError(400, `There is already an ${isThereAnyUpcomingOrOngoingSemester.status} registered semester.`)
+    throw new AppError(
+      400,
+      `There is already an ${isThereAnyUpcomingOrOngoingSemester.status} registered semester.`,
+    );
   }
 
   // check if the  academic semester is exists
@@ -63,11 +65,15 @@ const getAllSemesterRegistrationFromDB = async (
 const getSingleSemesterRegistrationFromDB = async (
   semesterRegistrationId: string,
 ) => {
-  const isSemesterRegistrationExists = await SemesterRegistration.findById(semesterRegistrationId);
+  const isSemesterRegistrationExists = await SemesterRegistration.findById(
+    semesterRegistrationId,
+  );
   if (!isSemesterRegistrationExists) {
-    throw new AppError(404, "Semester registration not found with the provided ID.")
+    throw new AppError(
+      404,
+      'Semester registration not found with the provided ID.',
+    );
   }
-
 
   const result = await SemesterRegistration.findById(
     semesterRegistrationId,
@@ -76,39 +82,54 @@ const getSingleSemesterRegistrationFromDB = async (
   return result;
 };
 
-const updateSemesterRegistrationIntoDB = async (semesterRegistrationId: string, payload: Partial<TSemesterRegistration>) => {
-
-  const isSemesterRegistrationExists = await SemesterRegistration.findById(semesterRegistrationId);
+const updateSemesterRegistrationIntoDB = async (
+  semesterRegistrationId: string,
+  payload: Partial<TSemesterRegistration>,
+) => {
+  const isSemesterRegistrationExists = await SemesterRegistration.findById(
+    semesterRegistrationId,
+  );
 
   if (!isSemesterRegistrationExists) {
-    throw new AppError(404, "This semester is not exists!")
+    throw new AppError(404, 'This semester is not exists!');
   }
 
   const currentSemesterStatus = isSemesterRegistrationExists?.status;
   const requestedSemesterStatus = payload?.status;
 
-  if (currentSemesterStatus === "ENDED") {
-    throw new AppError(400, "This semester is already ENDED")
+  if (currentSemesterStatus === RegistrationStatus.ENDED) {
+    throw new AppError(400, 'This semester is already ENDED');
   }
-
 
   // UPCOMING->ONGOING->ENDED
-  if (currentSemesterStatus === "UPCOMING" && requestedSemesterStatus === "ENDED") {
-    throw new AppError(404, `You can not directly change status from ${currentSemesterStatus} to ${requestedSemesterStatus}`)
+  if (
+    currentSemesterStatus === RegistrationStatus.UPCOMING &&
+    requestedSemesterStatus === RegistrationStatus.ENDED
+  ) {
+    throw new AppError(
+      404,
+      `You can not directly change status from ${currentSemesterStatus} to ${requestedSemesterStatus}`,
+    );
   }
 
-  if (currentSemesterStatus === "ONGOING" && requestedSemesterStatus === "UPCOMING") {
-    throw new AppError(404, `You can not directly change status from ${currentSemesterStatus} to ${requestedSemesterStatus}`)
+  if (
+    currentSemesterStatus === RegistrationStatus.ONGOING &&
+    requestedSemesterStatus === RegistrationStatus.UPCOMING
+  ) {
+    throw new AppError(
+      404,
+      `You can not directly change status from ${currentSemesterStatus} to ${requestedSemesterStatus}`,
+    );
   }
 
-  const result = await SemesterRegistration.findById(semesterRegistrationId, payload, { new: true, runValidators: true });
+  const result = await SemesterRegistration.findById(
+    semesterRegistrationId,
+    payload,
+    { new: true, runValidators: true },
+  );
 
   return result;
-
-
-
-
-}
+};
 
 export const SemesterRegistrationServices = {
   createSemesterRegistrationIntoDB,
