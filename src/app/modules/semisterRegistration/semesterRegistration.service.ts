@@ -67,6 +67,8 @@ const getSingleSemesterRegistrationFromDB = async (
   if (!isSemesterRegistrationExists) {
     throw new AppError(404, "Semester registration not found with the provided ID.")
   }
+
+
   const result = await SemesterRegistration.findById(
     semesterRegistrationId,
   ).populate('academicSemester');
@@ -83,14 +85,34 @@ const updateSemesterRegistrationIntoDB = async (semesterRegistrationId: string, 
   }
 
   const currentSemesterStatus = isSemesterRegistrationExists?.status;
+  const requestedSemesterStatus = payload?.status;
 
   if (currentSemesterStatus === "ENDED") {
     throw new AppError(400, "This semester is already ENDED")
   }
+
+
+  // UPCOMING->ONGOING->ENDED
+  if (currentSemesterStatus === "UPCOMING" && requestedSemesterStatus === "ENDED") {
+    throw new AppError(404, `You can not directly change status from ${currentSemesterStatus} to ${requestedSemesterStatus}`)
+  }
+
+  if (currentSemesterStatus === "ONGOING" && requestedSemesterStatus === "UPCOMING") {
+    throw new AppError(404, `You can not directly change status from ${currentSemesterStatus} to ${requestedSemesterStatus}`)
+  }
+
+  const result = await SemesterRegistration.findById(semesterRegistrationId, payload, { new: true, runValidators: true });
+
+  return result;
+
+
+
+
 }
 
 export const SemesterRegistrationServices = {
   createSemesterRegistrationIntoDB,
   getAllSemesterRegistrationFromDB,
   getSingleSemesterRegistrationFromDB,
+  updateSemesterRegistrationIntoDB,
 };
