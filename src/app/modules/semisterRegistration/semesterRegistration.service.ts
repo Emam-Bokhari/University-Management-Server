@@ -18,7 +18,7 @@ const createSemesterRegistrationIntoDB = async (
   });
 
   if (isThereAnyUpcomingOrOngoingSemester) {
-    throw new AppError(400, `There is already a ${isThereAnyUpcomingOrOngoingSemester.status} `)
+    throw new AppError(400, `There is already an ${isThereAnyUpcomingOrOngoingSemester.status} registered semester.`)
   }
 
   // check if the  academic semester is exists
@@ -63,12 +63,31 @@ const getAllSemesterRegistrationFromDB = async (
 const getSingleSemesterRegistrationFromDB = async (
   semesterRegistrationId: string,
 ) => {
+  const isSemesterRegistrationExists = await SemesterRegistration.findById(semesterRegistrationId);
+  if (!isSemesterRegistrationExists) {
+    throw new AppError(404, "Semester registration not found with the provided ID.")
+  }
   const result = await SemesterRegistration.findById(
     semesterRegistrationId,
   ).populate('academicSemester');
 
   return result;
 };
+
+const updateSemesterRegistrationIntoDB = async (semesterRegistrationId: string, payload: Partial<TSemesterRegistration>) => {
+
+  const isSemesterRegistrationExists = await SemesterRegistration.findById(semesterRegistrationId);
+
+  if (!isSemesterRegistrationExists) {
+    throw new AppError(404, "This semester is not exists!")
+  }
+
+  const currentSemesterStatus = isSemesterRegistrationExists?.status;
+
+  if (currentSemesterStatus === "ENDED") {
+    throw new AppError(400, "This semester is already ENDED")
+  }
+}
 
 export const SemesterRegistrationServices = {
   createSemesterRegistrationIntoDB,
