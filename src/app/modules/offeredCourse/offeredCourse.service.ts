@@ -9,7 +9,7 @@ import { OfferedCourse } from "./offeredCourse.model";
 
 const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
 
-    const { semesterRegistration, academicFaculty, academicDepartment, course, faculty } = payload;
+    const { semesterRegistration, academicFaculty, academicDepartment, course, faculty, section } = payload;
 
     const isSemesterRegistrationExists = await SemesterRegistration.findById(semesterRegistration);
 
@@ -42,6 +42,27 @@ const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
     if (!isfacultyExists) {
         throw new AppError(404, "Faculty not found!");
     }
+
+    const isDepartmentBelongToFaculty = await AcademicDepartment.findOne({
+        _id: academicDepartment,
+        academicFaculty: academicFaculty,
+    })
+
+    if (!isDepartmentBelongToFaculty) {
+        throw new AppError(400, `This ${isAcademicDepartmentExists.name} is not belong to this ${isAcademicFacultyExists.name}`)
+    }
+
+    const isSameOfferedCourseExistsWithSameRegisteredSemesterWithSameSection = await OfferedCourse.findOne({
+        semesterRegistration: semesterRegistration,
+        course: course,
+        section: section,
+    });
+
+    if (isSameOfferedCourseExistsWithSameRegisteredSemesterWithSameSection) {
+        throw new AppError(400, "Offered course with same section is already exists!")
+    };
+
+
 
     const result = await OfferedCourse.create({ ...payload, academicSemester });
 
