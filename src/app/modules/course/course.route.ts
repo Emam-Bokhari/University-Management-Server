@@ -2,11 +2,12 @@ import express from 'express';
 import { CourseControllers } from './course.controller';
 import { validateRequest } from '../../middlewares/validateRequest';
 import { courseValidationSchema } from './course.validation';
+import { sanitizeRequestMiddleware } from '../../middlewares/sanitize.middleware';
 
 const router = express.Router();
 
 router.post(
-  '/create-course',
+  '/create-course', sanitizeRequestMiddleware,
   validateRequest(courseValidationSchema.createCourseValidationSchema),
   CourseControllers.createCourse,
 );
