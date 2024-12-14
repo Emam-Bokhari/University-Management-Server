@@ -1,30 +1,30 @@
 import AppError from "../../errors/AppError";
 import { User } from "../user/user.model";
 import { TLoginUser } from "./auth.interface";
-import bcrypt from "bcrypt"
 
 const loginUser = async (payload: TLoginUser) => {
     // checking if the user is exist
-    // const isUserExists = await User.findOne({ id: payload?.id });
-    if (!(await User.isUserExistsByCustomId(payload?.id))) {
+    const user = await User.isUserExistsByCustomId(payload?.id)
+
+    if (!user) {
         throw new AppError(404, "The user is not found!")
     }
 
     // // checking if the user is Deleted
-    if ((await User.isUserExistsByCustomId(payload?.id)).isDeleted === true) {
+    if (user.isDeleted === true) {
         throw new AppError(403, "The user is deleted!")
     }
 
 
     // // checking if the user is blocked
-    if ((await User.isUserExistsByCustomId(payload?.id)).status === "blocked") {
+    if (user.status === "blocked") {
         throw new AppError(403, "The user is blocked!")
     }
 
     // // checking if the password is matched
-    // const isPasswordMatched = await bcrypt.compare(payload?.password, (isUserExists?.password as string));
-
-    // console.log(isPasswordMatched)
+    if (!(await User.isPasswordMatched(payload?.password, user?.password))) {
+        throw new AppError(403, "Password do not mathced!")
+    }
 
     return null;
 }
