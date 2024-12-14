@@ -139,7 +139,7 @@ const updateOfferedCourseIntoDB = async (offeredCourseId: string, payload: Pick<
   const semesterRegistrationStatus = await SemesterRegistration.findById(semesterRegistration)
 
   if (semesterRegistrationStatus?.status !== "UPCOMING") {
-    throw new AppError(404, `You can not update this offered course! it is ${semesterRegistrationStatus.status}`)
+    throw new AppError(404, `You can not update this offered course! it is ${semesterRegistrationStatus?.status}`)
   }
 
 
