@@ -13,4 +13,6 @@ router.post(
   OfferedCourseControllers.createOfferedCourse,
 );
 
+router.patch("/:offeredCourseId", OfferedCourseControllers.updateOfferedCourse)
+
 export const OfferedCourseRoutes = router;
