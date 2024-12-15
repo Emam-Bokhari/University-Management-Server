@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model } from 'mongoose';
 
 export interface TUser {
   id: string;
@@ -7,11 +7,12 @@ export interface TUser {
   role: 'admin' | 'student' | 'faculty';
   status: 'in-progress' | 'blocked';
   isDeleted: boolean;
-};
-
-export interface UserModel extends Model<TUser> {
-  isUserExistsByCustomId(id: string): Promise<TUser>
-  isPasswordMatched(plainTextPassword: string, hashPassword: string): Promise<boolean>
 }
 
-
+export interface UserModel extends Model<TUser> {
+  isUserExistsByCustomId(id: string): Promise<TUser>;
+  isPasswordMatched(
+    plainTextPassword: string,
+    hashPassword: string,
+  ): Promise<boolean>;
+}

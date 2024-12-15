@@ -20,4 +20,4 @@ export type TSchedule = {
   days: TDays[];
   startTime: string;
   endTime: string;
-}
+};

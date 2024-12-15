@@ -7,7 +7,8 @@ import { sanitizeRequestMiddleware } from '../../middlewares/sanitize.middleware
 const router = express.Router();
 
 router.post(
-  '/create-course', sanitizeRequestMiddleware,
+  '/create-course',
+  sanitizeRequestMiddleware,
   validateRequest(courseValidationSchema.createCourseValidationSchema),
   CourseControllers.createCourse,
 );
