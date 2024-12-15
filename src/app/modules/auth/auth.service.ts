@@ -1,6 +1,8 @@
+import config from "../../config";
 import AppError from "../../errors/AppError";
 import { User } from "../user/user.model";
 import { TLoginUser } from "./auth.interface";
+import jwt from "jsonwebtoken";
 
 const loginUser = async (payload: TLoginUser) => {
     // checking if the user is exist
@@ -26,7 +28,24 @@ const loginUser = async (payload: TLoginUser) => {
         throw new AppError(403, "Password do not mathced!")
     }
 
-    return null;
+    // create token and sent to the client
+
+    const jwtPayload = {
+        id: user,
+        role: user?.role,
+    }
+
+    const accessToken = jwt.sign(
+        jwtPayload
+        , config.jwt_access_secret as string, { expiresIn: '10d' });
+
+
+
+
+    return {
+        accessToken,
+        needsPasswordChange: user?.needsPasswordChange,
+    };
 }
 
 export const AuthServices = {
