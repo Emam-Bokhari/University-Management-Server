@@ -87,7 +87,12 @@ const changePasswordIntoDB = async (userData: JwtPayload, payload: { oldPassword
   return null;
 }
 
+const forgetPassword = async (userId: string) => {
+
+}
+
 export const AuthServices = {
   loginUser,
   changePasswordIntoDB,
+  forgetPassword,
 };
