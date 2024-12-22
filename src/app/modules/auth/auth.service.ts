@@ -111,10 +111,10 @@ const forgetPassword = async (userId: string) => {
     role: user?.role,
   };
 
-  const accessToken = createToken(jwtPayload, config.jwt_access_secret as string, "10m");
+  const resetToken = createToken(jwtPayload, config.jwt_reset_secret as string, config.jwt_reset_expires_in as string);
 
   // url,id,token
-  const resetUILink = `http://localhost:300/api/v1/?id=${user.id}&token=${accessToken}`
+  const resetUILink = `http://localhost:300/api/v1/?id=${user.id}&token=${resetToken}`
 
   console.log(resetUILink)
 
