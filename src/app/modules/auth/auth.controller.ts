@@ -31,7 +31,7 @@ const changePassword: RequestHandler = catchAsync(async (req, res) => {
   const { ...passwordData } = req.body;
 
   const result = await AuthServices.changePasswordIntoDB(req.user, passwordData);
-  console.log(req.user, req.body)
+  // console.log(req.user, req.body)
 
   sendResponse(res, {
     statusCode: 200,

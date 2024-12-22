@@ -4,6 +4,7 @@ import { User } from '../user/user.model';
 import { TLoginUser } from './auth.interface';
 import bcrypt from "bcrypt";
 import { createToken } from './auth.utils';
+import { JwtPayload } from 'jsonwebtoken';
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user is exist
