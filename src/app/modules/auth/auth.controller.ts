@@ -48,7 +48,7 @@ const forgetPassword: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Reset token is retrieved successfully",
+    message: "Reset link is generated successfully",
     data: result,
   })
 })

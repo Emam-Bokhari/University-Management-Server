@@ -88,6 +88,38 @@ const changePasswordIntoDB = async (userData: JwtPayload, payload: { oldPassword
 }
 
 const forgetPassword = async (userId: string) => {
+  // checking if the user is exist
+  const user = await User.isUserExistsByCustomId(userId);
+  // console.log(user)
+
+  if (!user) {
+    throw new AppError(404, 'The user is not found!');
+  }
+
+  // // checking if the user is Deleted
+  if (user.isDeleted === true) {
+    throw new AppError(403, 'The user is deleted!');
+  }
+
+  // // checking if the user is blocked
+  if (user.status === 'blocked') {
+    throw new AppError(403, 'The user is blocked!');
+  }
+
+  const jwtPayload = {
+    userId: user?.id,
+    role: user?.role,
+  };
+
+  const accessToken = createToken(jwtPayload, config.jwt_access_secret as string, "10m");
+
+  // url,id,token
+  const resetUILink = `http://localhost:300/api/v1/?id=${user.id}&token=${accessToken}`
+
+  console.log(resetUILink)
+
+  return null;
+
 
 }
 
