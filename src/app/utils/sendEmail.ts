@@ -1,24 +1,23 @@
-import nodemailer from "nodemailer";
-import config from "../config";
+import nodemailer from 'nodemailer';
+import config from '../config';
 
 export const sendEmail = async (to: string, reset_link: string) => {
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: config.node_env === 'production', // true for port 465, false for other ports
+    auth: {
+      user: 'studentemam@gmail.com',
+      pass: 'mgck ppwe orru vblw',
+    },
+  });
 
-    const transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        secure: config.node_env === "production", // true for port 465, false for other ports
-        auth: {
-            user: "studentemam@gmail.com",
-            pass: "mgck ppwe orru vblw",
-        },
-    });
-
-    await transporter.sendMail({
-        from: 'studentemam@gmail.com', // sender address
-        to: to, // list of receivers
-        subject: "Reset Your Password", // Subject line
-        text: "Please change your password", // plain text body
-        html: `<!DOCTYPE html>
+  await transporter.sendMail({
+    from: 'studentemam@gmail.com', // sender address
+    to: to, // list of receivers
+    subject: 'Reset Your Password', // Subject line
+    text: 'Please change your password', // plain text body
+    html: `<!DOCTYPE html>
         <html lang="en">
         <head>
           <meta charset="UTF-8">
@@ -107,8 +106,5 @@ export const sendEmail = async (to: string, reset_link: string) => {
         </body>
         </html>
         `,
-    })
-
-
-}
-
+  });
+};

@@ -13,11 +13,12 @@ export const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(401, 'You are not authorized!');
     }
 
-
-    const decoded = jwt.verify(token, config.jwt_access_secret as string) as JwtPayload;
+    const decoded = jwt.verify(
+      token,
+      config.jwt_access_secret as string,
+    ) as JwtPayload;
 
     const { role, userId, iat } = decoded;
-
 
     // checking if the user is exist
     const user = await User.isUserExistsByCustomId(userId);
@@ -37,22 +38,16 @@ export const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(403, 'The user is blocked!');
     }
 
-    if (user.passwordChangeAt && User.isJWTIssuedBeforePasswordChanged(user.passwordChangeAt, iat as number)) {
-      throw new AppError(401, "You are not authorized!")
-    }
-
+    // if (user.passwordChangeAt && User.isJWTIssuedBeforePasswordChanged(user.passwordChangeAt, iat as number)) {
+    //   throw new AppError(401, "You are not authorized!")
+    // }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
-      throw new AppError(401, "You are not authorized!");
+      throw new AppError(401, 'You are not authorized!');
     }
 
     req.user = decoded as JwtPayload;
 
     next();
-
-
   });
 };
-
-
-

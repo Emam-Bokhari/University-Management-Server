@@ -9,10 +9,10 @@ const loginUser: RequestHandler = catchAsync(async (req, res) => {
 
   const { refreshToken, accessToken, needsPasswordChange } = result;
 
-  res.cookie("refreshToken", refreshToken, {
-    secure: config.node_env === "production",
+  res.cookie('refreshToken', refreshToken, {
+    secure: config.node_env === 'production',
     httpOnly: true,
-  })
+  });
 
   sendResponse(res, {
     statusCode: 201,
@@ -26,20 +26,21 @@ const loginUser: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const changePassword: RequestHandler = catchAsync(async (req, res) => {
-
-
   const { ...passwordData } = req.body;
 
-  const result = await AuthServices.changePasswordIntoDB(req.user, passwordData);
+  const result = await AuthServices.changePasswordIntoDB(
+    req.user,
+    passwordData,
+  );
   // console.log(req.user, req.body)
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Successfully changed the password",
+    message: 'Successfully changed the password',
     data: result,
-  })
-})
+  });
+});
 
 const forgetPassword: RequestHandler = catchAsync(async (req, res) => {
   const userId = req.body.id;
@@ -48,25 +49,29 @@ const forgetPassword: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Reset link is generated successfully",
+    message: 'Reset link is generated successfully',
     data: result,
-  })
-})
+  });
+});
 
 const resetPassword: RequestHandler = catchAsync(async (req, res) => {
   const token = req.headers.authorization;
   const userId = req.body.id;
   const newPassword = req.body.newPassword;
 
-  const result = await AuthServices.resetPassword(userId, newPassword, token as string)
+  const result = await AuthServices.resetPassword(
+    userId,
+    newPassword,
+    token as string,
+  );
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Sucessfully reset your password",
+    message: 'Sucessfully reset your password',
     data: result,
-  })
-})
+  });
+});
 
 export const AuthControllers = {
   loginUser,
