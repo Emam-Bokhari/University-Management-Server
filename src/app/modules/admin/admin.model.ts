@@ -30,6 +30,7 @@ const adminSchema = new Schema<TAdmin>(
       type: Schema.ObjectId,
       required: [true, 'User ID is required'],
       unique: true,
+      ref: 'User',
     },
     name: {
       type: TUserNameSchema,

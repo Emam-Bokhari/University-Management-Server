@@ -46,9 +46,11 @@ const createAdmin: RequestHandler = catchAsync(async (req, res) => {
 });
 
 const getMe: RequestHandler = catchAsync(async (req, res) => {
-  const token = req.headers.authorization;
 
-  const result = await UserServices.getMe(token as string);
+  const { userId, role } = req.user;
+
+
+  const result = await UserServices.getMe(userId, role);
 
   sendResponse(res, {
     statusCode: 200,
