@@ -116,7 +116,7 @@ const createStudentValidationSchema = z.object({
   body: z.object({
     student: z.object({
       name: createUserNameValidationSchema,
-      profileImage: z.string().trim().optional(),
+      // profileImage: z.string().trim().optional(),
       gender: z.enum(['male', 'female'], {
         errorMap: () => ({
           message: "Gender must be either 'male' or 'female'",
@@ -151,7 +151,7 @@ const updateStudentValidationSchema = z.object({
   body: z.object({
     student: z.object({
       name: updateUserNameValidationSchema,
-      profileImage: z.string().trim().optional(),
+      // profileImage: z.string().trim().optional(),
       gender: z
         .enum(['male', 'female'], {
           errorMap: () => ({

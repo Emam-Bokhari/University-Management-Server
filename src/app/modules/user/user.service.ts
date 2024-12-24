@@ -15,9 +15,16 @@ import { TFaculty } from '../faculty/faculty.interface';
 import { Faculty } from '../faculty/faculty.model';
 import { TAdmin } from '../admin/admin.interface';
 import { Admin } from '../admin/admin.model';
-import { verifyToken } from '../auth/auth.utils';
+import {
+  deleteImageInTemporaryFile,
+  sendImageToCloudinary,
+} from '../../utils/sendImageToCloudinary';
 
-const createStudentIntoDB = async (password: string, payload: TStudent) => {
+const createStudentIntoDB = async (
+  file: any,
+  password: string,
+  payload: TStudent,
+) => {
   // create a user object
   const userData: Partial<TUser> = {};
 
@@ -46,6 +53,11 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
     // set manually generated if
     userData.id = await generateStudentId(admissionSemester);
 
+    const imageName = `${userData.id}-${payload?.name?.firstName}`;
+    const { path } = file;
+    const image = await sendImageToCloudinary(imageName, path);
+    deleteImageInTemporaryFile(path);
+
     // transction:1
     // create a user
     const newUser = await User.create([userData], { session });
@@ -57,7 +69,7 @@ const createStudentIntoDB = async (password: string, payload: TStudent) => {
 
     payload.id = newUser[0].id; // embedding ID
     payload.user = newUser[0]._id; // reference ID
-
+    payload.profileImage = image?.secure_url;
     // transction:2
     const newStudent = await Student.create([payload], { session });
 
@@ -164,31 +176,32 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   }
 };
 
-const changeStatusInDB = async (id: string, payload: { status: TStatusChange }) => {
-
-  const result = await User.findByIdAndUpdate(id, payload, { new: true, runValidators: true })
+const changeStatusInDB = async (
+  id: string,
+  payload: { status: TStatusChange },
+) => {
+  const result = await User.findByIdAndUpdate(id, payload, {
+    new: true,
+    runValidators: true,
+  });
 
   return result;
-}
+};
 
 const getMe = async (userId: string, role: string) => {
-
   let result = null;
 
   if (role === 'admin') {
-    result = await Admin.findOne({ id: userId }).populate("user");
+    result = await Admin.findOne({ id: userId }).populate('user');
   }
   if (role === 'student') {
-    result = await Student.findOne({ id: userId })
-      .populate("user");
+    result = await Student.findOne({ id: userId }).populate('user');
   }
   if (role === 'faculty') {
-    result = await Faculty.findOne({ id: userId }).populate("user");
+    result = await Faculty.findOne({ id: userId }).populate('user');
   }
 
   return result;
-
-
 };
 
 export const UserServices = {

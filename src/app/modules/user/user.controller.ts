@@ -5,9 +5,13 @@ import { catchAsync } from '../../utils/catchAsync';
 
 const createStudent: RequestHandler = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body;
+  // console.log(req.file, req.body)
 
-  // if validation passes, create a student in database
-  const result = await UserServices.createStudentIntoDB(password, studentData);
+  const result = await UserServices.createStudentIntoDB(
+    req.file,
+    password,
+    studentData,
+  );
 
   // successfull response
   sendResponse(res, {
@@ -53,15 +57,13 @@ const changeStatus: RequestHandler = catchAsync(async (req, res) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Status change successfully",
+    message: 'Status change successfully',
     data: result,
-  })
-})
+  });
+});
 
 const getMe: RequestHandler = catchAsync(async (req, res) => {
-
   const { userId, role } = req.user;
-
 
   const result = await UserServices.getMe(userId, role);
 
