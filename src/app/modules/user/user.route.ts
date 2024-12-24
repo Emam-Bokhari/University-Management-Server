@@ -19,14 +19,19 @@ router.post(
     req.body = JSON.parse(req.body.data);
     next();
   },
-  // validateRequest(studentValidationSchema.createStudentValidationSchema),
+  validateRequest(studentValidationSchema.createStudentValidationSchema),
   UserControllers.createStudent,
 );
 
 router.post(
   '/create-faculty',
-  auth(USER_ROLE.admin),
-  validateRequest(facultyValidationSchema.createFacultyValidationSchema),
+  // auth(USER_ROLE.admin),
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
+  // validateRequest(facultyValidationSchema.createFacultyValidationSchema),
   UserControllers.createFaculty,
 );
 
