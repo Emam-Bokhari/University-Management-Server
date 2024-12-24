@@ -4,7 +4,7 @@ import AppError from '../../errors/AppError';
 import { AcademicSemester } from '../academicSemester/academicSemester.model';
 import { TStudent } from '../student/student.interface';
 import { Student } from '../student/student.model';
-import { TUser } from './user.interface';
+import { TStatusChange, TUser } from './user.interface';
 import { User } from './user.model';
 import {
   generateAdminId,
@@ -164,6 +164,13 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   }
 };
 
+const changeStatusInDB = async (id: string, payload: { status: TStatusChange }) => {
+
+  const result = await User.findByIdAndUpdate(id, payload, { new: true, runValidators: true })
+
+  return result;
+}
+
 const getMe = async (userId: string, role: string) => {
 
   let result = null;
@@ -188,6 +195,7 @@ export const UserServices = {
   createStudentIntoDB,
   createFacultyIntoDB,
   createAdminIntoDB,
+  changeStatusInDB,
   getMe,
 };
 

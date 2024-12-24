@@ -24,4 +24,9 @@ export interface UserModel extends Model<TUser> {
   ): boolean;
 }
 
+export enum TStatusChange {
+  InProgress = "in-progress",
+  Blocked = "blocked"
+}
+
 export type TUserRole = keyof typeof USER_ROLE;
