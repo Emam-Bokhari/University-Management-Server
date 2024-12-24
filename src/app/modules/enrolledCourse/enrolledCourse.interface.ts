@@ -1,5 +1,7 @@
 import { Types } from "mongoose"
 
+export type TGrade = "A" | "B" | "C" | "D" | "F" | "NA"
+
 type TCourseMarks = {
     classTest1: number;
     midTerm: number;
@@ -7,13 +9,7 @@ type TCourseMarks = {
     finalTerm: number;
 }
 
-enum TGrade {
-    A = "A",
-    B = "B",
-    C = "C",
-    D = "D",
-    NA = "NA"
-}
+
 
 export type TEnrolledCourse = {
     semesterRegistration: Types.ObjectId;
