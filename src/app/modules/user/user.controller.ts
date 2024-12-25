@@ -6,6 +6,7 @@ import { catchAsync } from '../../utils/catchAsync';
 const createStudent: RequestHandler = catchAsync(async (req, res) => {
   const { password, student: studentData } = req.body;
   // console.log(req.file, req.body)
+  // console.log(req.file)
 
   const result = await UserServices.createStudentIntoDB(
     req.file,
@@ -25,7 +26,12 @@ const createStudent: RequestHandler = catchAsync(async (req, res) => {
 const createFaculty: RequestHandler = catchAsync(async (req, res) => {
   const facultyData = req.body.faculty;
   const password = req.body.password;
-  const result = await UserServices.createFacultyIntoDB(req.file, password, facultyData);
+  console.log(req.file, 'faculty file');
+  const result = await UserServices.createFacultyIntoDB(
+    req.file,
+    password,
+    facultyData,
+  );
 
   sendResponse(res, {
     statusCode: 201,
@@ -38,8 +44,13 @@ const createFaculty: RequestHandler = catchAsync(async (req, res) => {
 const createAdmin: RequestHandler = catchAsync(async (req, res) => {
   const password = req.body.password;
   const adminData = req.body.admin;
+  console.log(req.file);
 
-  const result = await UserServices.createAdminIntoDB(req.file, password, adminData);
+  const result = await UserServices.createAdminIntoDB(
+    req.file,
+    password,
+    adminData,
+  );
 
   sendResponse(res, {
     statusCode: 201,

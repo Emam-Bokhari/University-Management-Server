@@ -13,13 +13,13 @@ const router = express.Router();
 
 router.post(
   '/create-student',
-  auth('admin'),
+  // auth('admin'),
   upload.single('file'),
   (req: Request, res: Response, next: NextFunction) => {
     req.body = JSON.parse(req.body.data);
     next();
   },
-  validateRequest(studentValidationSchema.createStudentValidationSchema),
+  // validateRequest(studentValidationSchema.createStudentValidationSchema),
   UserControllers.createStudent,
 );
 
@@ -37,6 +37,11 @@ router.post(
 
 router.post(
   '/create-admin',
+  upload.single('file'),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = JSON.parse(req.body.data);
+    next();
+  },
   validateRequest(adminValidationSchema.createAdminValidationSchema),
   UserControllers.createAdmin,
 );

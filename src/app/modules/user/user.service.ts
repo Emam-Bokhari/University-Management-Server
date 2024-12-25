@@ -87,7 +87,11 @@ const createStudentIntoDB = async (
   }
 };
 
-const createFacultyIntoDB = async (file: any, password: string, payload: TFaculty) => {
+const createFacultyIntoDB = async (
+  file: any,
+  password: string,
+  payload: TFaculty,
+) => {
   const facultyData: Partial<TUser> = {};
 
   facultyData.password = password || (config.default_Pass as string);
@@ -139,7 +143,11 @@ const createFacultyIntoDB = async (file: any, password: string, payload: TFacult
   }
 };
 
-const createAdminIntoDB = async (file: any, password: string, payload: TAdmin) => {
+const createAdminIntoDB = async (
+  file: any,
+  password: string,
+  payload: TAdmin,
+) => {
   const adminData: Partial<TUser> = {};
 
   adminData.password = password || (config.default_Pass as string);
