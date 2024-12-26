@@ -2,7 +2,7 @@ import { Types } from 'mongoose';
 
 export type TGrade = 'A' | 'B' | 'C' | 'D' | 'F' | 'NA';
 
-type TCourseMarks = {
+export type TCourseMarks = {
   classTest1: number;
   midTerm: number;
   classTest2: number;
