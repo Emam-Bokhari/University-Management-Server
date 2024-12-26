@@ -20,6 +20,11 @@ const createEnrolledCourse: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+const updateEnrolledCourseMarks: RequestHandler = catchAsync(async (req, res) => {
+  console.log(req.user)
+})
+
 export const EnrolledCourseControllers = {
   createEnrolledCourse,
+  updateEnrolledCourseMarks,
 };
