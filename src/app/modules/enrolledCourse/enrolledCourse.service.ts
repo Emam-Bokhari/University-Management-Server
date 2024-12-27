@@ -6,6 +6,7 @@ import { TEnrolledCourse } from './enrolledCourse.interface';
 import { EnrolledCourse } from './enrolledCourse.model';
 import { SemesterRegistration } from '../semisterRegistration/semesterRegistration.model';
 import { Course } from '../course/course.model';
+import { Faculty } from '../faculty/faculty.model';
 
 
 
@@ -168,7 +169,61 @@ const createEnrolledCourseIntoDB = async (
     }
 };
 
-const updateEnrolledCourseMarksIntoDB = async () => {
+const updateEnrolledCourseMarksIntoDB = async (facultyId: string, payload: Partial<TEnrolledCourse>) => {
+
+    const { semesterRegistration, offeredCourse, student, courseMarks } = payload;
+
+    // check if semester registrations is exists
+    const isSemesterRegistrationExists = await SemesterRegistration.findById(semesterRegistration);
+    if (!isSemesterRegistrationExists) {
+        throw new AppError(404, "Semester registration is not found!")
+    }
+
+    // check if offered course is exists
+
+    const isOfferedCourseExists = await OfferedCourse.findById(offeredCourse);
+
+    if (!isOfferedCourseExists) {
+        throw new AppError(404, "Offered course not found!")
+    }
+
+    // check if student is exists
+    const isStudentExists = await Student.findById(student);
+
+    if (!isStudentExists) {
+        throw new AppError(404, "Student not found!")
+    }
+
+    const faculty = await Faculty.findOne({ id: facultyId }, { _id: 1 })
+
+    const isCourseBelongToFaculty = await EnrolledCourse.findOne({
+        semesterRegistration,
+        offeredCourse,
+        student,
+        faculty,
+
+    })
+
+    if (!isCourseBelongToFaculty) {
+        throw new AppError(403, "You are not authorized for update this course!")
+    }
+
+    const modifieData: Record<string, unknown> = {
+        ...courseMarks,
+    };
+
+    if (courseMarks && Object.keys(courseMarks).length) {
+        for (const [key, value] of Object.entries(courseMarks)) {
+            modifieData[`courseMarks.${key}`] = value
+        }
+    }
+
+    const result = await EnrolledCourse.findByIdAndUpdate(isCourseBelongToFaculty._id, modifieData, { new: true, runValidators: true })
+
+
+    return result;
+
+
 
 }
 
