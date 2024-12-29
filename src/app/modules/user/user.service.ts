@@ -19,6 +19,7 @@ import {
   deleteImageInTemporaryFile,
   sendImageToCloudinary,
 } from '../../utils/sendImageToCloudinary';
+import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
 
 const createStudentIntoDB = async (
   file: any,
@@ -45,6 +46,15 @@ const createStudentIntoDB = async (
   if (!admissionSemester) {
     throw new AppError(404, 'Academic semester not found!');
   }
+
+  // find academic department
+  const academicDepartment = await AcademicDepartment.findById(payload.academicDepartment);
+
+  if (!academicDepartment) {
+    throw new AppError(400, "Academic department not found!")
+  }
+
+  payload.academicFaculty = academicDepartment.academicFaculty;
 
   const session = await mongoose.startSession();
 
