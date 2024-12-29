@@ -16,9 +16,9 @@ const updateEnrolledCourseMarksValidationZodSchema = z.object({
       midTerm: z.number().optional(),
       classTest2: z.number().optional(),
       finalTerm: z.number().optional(),
-    })
-  })
-})
+    }),
+  }),
+});
 
 export const enrolledCourseValidationSchema = {
   createEnrolledCourseValidationSchema,

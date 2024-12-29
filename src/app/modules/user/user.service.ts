@@ -48,10 +48,12 @@ const createStudentIntoDB = async (
   }
 
   // find academic department
-  const academicDepartment = await AcademicDepartment.findById(payload.academicDepartment);
+  const academicDepartment = await AcademicDepartment.findById(
+    payload.academicDepartment,
+  );
 
   if (!academicDepartment) {
-    throw new AppError(400, "Academic department not found!")
+    throw new AppError(400, 'Academic department not found!');
   }
 
   payload.academicFaculty = academicDepartment.academicFaculty;
@@ -63,18 +65,13 @@ const createStudentIntoDB = async (
     // set manually generated if
     userData.id = await generateStudentId(admissionSemester);
 
-
     if (file) {
-
       const imageName = `${userData.id}-${payload?.name?.firstName}`;
       const { path } = file;
       const image = await sendImageToCloudinary(imageName, path);
       deleteImageInTemporaryFile(path);
       payload.profileImage = image?.secure_url as string;
     }
-
-
-
 
     // transction:1
     // create a user
@@ -127,14 +124,12 @@ const createFacultyIntoDB = async (
     facultyData.id = await generateFacultyId();
 
     if (file) {
-
       const imageName = `${facultyData.id}-${payload?.name?.firstName}`;
       const { path } = file;
       const image = await sendImageToCloudinary(imageName, path);
       deleteImageInTemporaryFile(path);
       payload.profileImage = image?.secure_url as string;
     }
-
 
     // transction:1
     // create a new user
@@ -146,7 +141,6 @@ const createFacultyIntoDB = async (
 
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
-
 
     // transction:2
     const newFaculty = await Faculty.create([payload], { session });
@@ -188,16 +182,12 @@ const createAdminIntoDB = async (
     adminData.id = await generateAdminId();
 
     if (file) {
-
       const imageName = `${adminData.id}-${payload?.name?.firstName}`;
       const { path } = file;
       const image = await sendImageToCloudinary(imageName, path);
       deleteImageInTemporaryFile(path);
       payload.profileImage = image?.secure_url as string;
     }
-
-
-
 
     const newUser = await User.create([adminData], { session });
 
