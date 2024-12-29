@@ -19,7 +19,7 @@ router.post(
     req.body = JSON.parse(req.body.data);
     next();
   },
-  // validateRequest(studentValidationSchema.createStudentValidationSchema),
+  validateRequest(studentValidationSchema.createStudentValidationSchema),
   UserControllers.createStudent,
 );
 

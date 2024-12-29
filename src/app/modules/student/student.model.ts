@@ -110,6 +110,7 @@ const studentSchema = new Schema<TStudent, StudentModel>({
   },
   profileImage: {
     type: String,
+    default: ""
   },
   gender: {
     type: String,

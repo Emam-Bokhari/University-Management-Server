@@ -63,10 +63,18 @@ const createStudentIntoDB = async (
     // set manually generated if
     userData.id = await generateStudentId(admissionSemester);
 
-    const imageName = `${userData.id}-${payload?.name?.firstName}`;
-    const { path } = file;
-    const image = await sendImageToCloudinary(imageName, path);
-    deleteImageInTemporaryFile(path);
+
+    if (file) {
+
+      const imageName = `${userData.id}-${payload?.name?.firstName}`;
+      const { path } = file;
+      const image = await sendImageToCloudinary(imageName, path);
+      deleteImageInTemporaryFile(path);
+      payload.profileImage = image?.secure_url as string;
+    }
+
+
+
 
     // transction:1
     // create a user
@@ -79,7 +87,7 @@ const createStudentIntoDB = async (
 
     payload.id = newUser[0].id; // embedding ID
     payload.user = newUser[0]._id; // reference ID
-    payload.profileImage = image?.secure_url;
+
     // transction:2
     const newStudent = await Student.create([payload], { session });
 

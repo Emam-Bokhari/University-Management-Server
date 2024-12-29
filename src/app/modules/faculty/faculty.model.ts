@@ -82,6 +82,7 @@ const facultySchema = new Schema<TFaculty>(
     },
     profileImage: {
       type: String,
+      default: ""
     },
     academicDepartment: {
       type: Schema.ObjectId,
