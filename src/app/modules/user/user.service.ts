@@ -126,10 +126,15 @@ const createFacultyIntoDB = async (
     session.startTransaction();
     facultyData.id = await generateFacultyId();
 
-    const imageName = `${facultyData.id}-${payload?.name?.firstName}`;
-    const { path } = file;
-    const image = await sendImageToCloudinary(imageName, path);
-    deleteImageInTemporaryFile(path);
+    if (file) {
+
+      const imageName = `${facultyData.id}-${payload?.name?.firstName}`;
+      const { path } = file;
+      const image = await sendImageToCloudinary(imageName, path);
+      deleteImageInTemporaryFile(path);
+      payload.profileImage = image?.secure_url as string;
+    }
+
 
     // transction:1
     // create a new user
@@ -141,7 +146,7 @@ const createFacultyIntoDB = async (
 
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
-    payload.profileImage = image?.secure_url;
+
 
     // transction:2
     const newFaculty = await Faculty.create([payload], { session });
@@ -182,10 +187,17 @@ const createAdminIntoDB = async (
     session.startTransaction();
     adminData.id = await generateAdminId();
 
-    const imageName = `${adminData.id}-${payload?.name?.firstName}`;
-    const { path } = file;
-    const image = await sendImageToCloudinary(imageName, path);
-    deleteImageInTemporaryFile(path);
+    if (file) {
+
+      const imageName = `${adminData.id}-${payload?.name?.firstName}`;
+      const { path } = file;
+      const image = await sendImageToCloudinary(imageName, path);
+      deleteImageInTemporaryFile(path);
+      payload.profileImage = image?.secure_url as string;
+    }
+
+
+
 
     const newUser = await User.create([adminData], { session });
 
@@ -195,7 +207,6 @@ const createAdminIntoDB = async (
 
     payload.id = newUser[0].id;
     payload.user = newUser[0]._id;
-    payload.profileImage = image?.secure_url;
 
     const newAdmin = await Admin.create([payload], { session });
 
